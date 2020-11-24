@@ -18,6 +18,7 @@ class Player(object):
         self.jumping = False
         self.jump_count = 5.25
         self.last_direction = None
+        self.changing_y = False
 
         for i in ["01", "02", "03", "04", "05", "06", "07", "08"]:
             self.left_images.append(pygame.image.load(f"images/mouse/left/{i}.png").convert_alpha())
@@ -26,6 +27,7 @@ class Player(object):
 
         self.width = self.right_images[0].get_rect().width
         self.height = self.right_images[0].get_rect().height
+        self.mask = pygame.mask.from_surface(self.right_images[0])
 
     def move(self):
         keys = pygame.key.get_pressed()
@@ -88,8 +90,10 @@ class Player(object):
                 if self.jump_count < 0:
                     neg = -1
                 self.y -= (self.jump_count ** 2) * 0.5 * neg
+                self.changing_y = True
                 self.jump_count -= 0.25
             else:
+                self.changing_y = False
                 self.jump_count = 5.25
                 self.jumping = False
 
@@ -98,6 +102,7 @@ class Player(object):
             self.falling = True
             self.y += self.vy + 0.5
             self.vy += 0.1
+            self.changing_y = True
             if self.right:
                 win.blit(self.right_images[0], (self.x, self.y))
 
@@ -105,10 +110,13 @@ class Player(object):
                 win.blit(self.left_images[0], (self.x, self.y))
 
         else:
+            if not self.jumping:
+                self.changing_y = False
             self.falling = False
 
     def touching(self):  # collision
-        return False
+        if self.changing_y:  # means player is falling, his y is getting lower
+            pass
 
     def movement(self):
         if not self.falling:
