@@ -28,72 +28,70 @@ class Player(object):
         self.height = self.right_images[0].get_rect().height
 
     def move(self):
-        if not self.falling:
-            keys = pygame.key.get_pressed()
+        keys = pygame.key.get_pressed()
 
-            if keys[pygame.K_d]:
-                self.left = False
-                self.right = True
-                self.last_direction = "right"
+        if keys[pygame.K_d]:
+            self.left = False
+            self.right = True
+            self.last_direction = "right"
 
-                self.x += self.vx
-                if self.run_count + 1 < self.image_repeater * len(self.right_images):
-                    self.run_count += 1
-                else:
-                    self.run_count = 0
-
-                win.blit(self.right_images[self.run_count // self.image_repeater], (self.x, self.y))
-
-            elif keys[pygame.K_a]:
-                self.left = True
-                self.right = False
-                self.last_direction = "left"
-
-                self.x -= self.vx
-                if self.run_count + 1 < self.image_repeater * len(self.left_images):
-                    self.run_count += 1
-                else:
-                    self.run_count = 0
-
-                win.blit(self.left_images[self.run_count // self.image_repeater], (self.x, self.y))
-
+            self.x += self.vx
+            if self.run_count + 1 < self.image_repeater * len(self.right_images):
+                self.run_count += 1
             else:
-                if self.right:
-                    win.blit(self.right_images[0], (self.x, self.y))
+                self.run_count = 0
 
-                elif self.left:
-                    win.blit(self.left_images[0], (self.x, self.y))
+            win.blit(self.right_images[self.run_count // self.image_repeater], (self.x, self.y))
+
+        elif keys[pygame.K_a]:
+            self.left = True
+            self.right = False
+            self.last_direction = "left"
+
+            self.x -= self.vx
+            if self.run_count + 1 < self.image_repeater * len(self.left_images):
+                self.run_count += 1
+            else:
+                self.run_count = 0
+
+            win.blit(self.left_images[self.run_count // self.image_repeater], (self.x, self.y))
+
+        else:
+            if self.right:
+                win.blit(self.right_images[0], (self.x, self.y))
+
+            elif self.left:
+                win.blit(self.left_images[0], (self.x, self.y))
 
     def jump(self):
-        if not self.falling:
-            keys = pygame.key.get_pressed()
+        keys = pygame.key.get_pressed()
 
-            if keys[pygame.K_SPACE]:
-                self.jumping = True
+        if keys[pygame.K_SPACE]:
+            self.jumping = True
 
-            if self.jumping:
-                if self.jump_count >= -5.25:
-                    if keys[pygame.K_d]:
-                        self.x += self.vx
-                        win.blit(self.right_images[0], (self.x, self.y))
-                    elif keys[pygame.K_a]:
-                        self.x -= self.vx
-                        win.blit(self.left_images[0], (self.x, self.y))
-                    else:
-                        if self.right:
-                            win.blit(self.right_images[0], (self.x, self.y))
-
-                        elif self.left:
-                            win.blit(self.left_images[0], (self.x, self.y))
-
-                    neg = 1
-                    if self.jump_count < 0:
-                        neg = -1
-                    self.y -= (self.jump_count ** 2) * 0.5 * neg
-                    self.jump_count -= 0.25
+        if self.jumping:
+            if self.jump_count >= -5.25:
+                if keys[pygame.K_d]:
+                    self.x += self.vx
+                    win.blit(self.right_images[0], (self.x, self.y))
+                elif keys[pygame.K_a]:
+                    self.x -= self.vx
+                    win.blit(self.left_images[0], (self.x, self.y))
                 else:
-                    self.jump_count = 5.25
-                    self.jumping = False
+                    if self.right:
+                        win.blit(self.right_images[0], (self.x, self.y))
+
+                    elif self.left:
+                        win.blit(self.left_images[0], (self.x, self.y))
+
+                neg = 1
+                if self.jump_count < 0:
+                    neg = -1
+                self.y -= (self.jump_count ** 2) * 0.5 * neg
+                self.jump_count -= 0.25
+            else:
+                self.jump_count = 5.25
+                self.jumping = False
 
     def fall(self):
         if not self.touching() and self.y < win_height - self.height and not self.jumping:
@@ -113,9 +111,10 @@ class Player(object):
         return False
 
     def movement(self):
-        if not self.jumping:
-            self.move()
-        self.jump()
+        if not self.falling:
+            if not self.jumping:
+                self.move()
+            self.jump()
         self.fall()
 
 

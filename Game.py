@@ -14,7 +14,7 @@ class Game(object):
 
     def run(self):
         # will run game
-        self.player.move()
+        self.player.movement()
 
     def game_over_screen(self):
         # will show game over screen
@@ -29,7 +29,7 @@ while g.running:
         if event.type == pygame.QUIT:
             g.running = False
 
-    win.fill((255, 255, 255))
+    win.fill((0, 120, 130))
 
     g.new()
 
