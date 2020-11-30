@@ -1,14 +1,16 @@
 import pygame
 
+from Player import Player
+from settings import *
+
 
 class Game:
     def __init__(self):
         self.running = True
         self.clock = pygame.time.Clock()
-        self.win_width = 1600
-        self.win_height = 1100
-        self.win = pygame.display.set_mode((self.win_width, self.win_height))
-        self.FPS = 60
+        self.win_width = win_width
+        self.win_height = win_height
+        self.win = win
         self.player = Player()
 
     def start_screen(self):
@@ -28,6 +30,8 @@ class Game:
             self.player.move_right()
         if keys[pygame.K_RCTRL]:
             self.player.jump()
+        else:
+            self.player.stand()
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -44,7 +48,12 @@ g = Game()
 
 # MAIN LOOP
 while g.running:
+    g.win.fill(bg_color)
+
     g.run()
+
+    g.clock.tick(FPS)
+    pygame.display.update()
 
 
 
