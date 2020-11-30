@@ -24,14 +24,17 @@ class Game:
 
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT]:
+        if keys[pygame.K_LEFT] and not self.player.walking:
             self.player.move_left()
-        if keys[pygame.K_RIGHT]:
+            self.player.walking = True
+        if keys[pygame.K_RIGHT] and not self.player.walking:
             self.player.move_right()
-        if keys[pygame.K_RCTRL]:
+            self.player.walking = True
+        if keys[pygame.K_RCTRL] or self.player.jumping:
             self.player.jump()
         else:
             self.player.stand()
+            self.player.walking = False
 
     def handle_events(self):
         for event in pygame.event.get():
