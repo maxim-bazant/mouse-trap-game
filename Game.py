@@ -1,4 +1,3 @@
-from Player import Player
 import pygame
 
 
