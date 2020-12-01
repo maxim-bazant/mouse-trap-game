@@ -13,6 +13,7 @@ class Game:
         self.win_height = win_height
         self.win = win
         self.player = Player()
+        self.top_red_floor = HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png"), win_width, 400)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -27,6 +28,8 @@ class Game:
 
     def game(self):
         self.handle_events()
+
+        self.top_red_floor.blit()
 
         keys = pygame.key.get_pressed()
 
@@ -55,12 +58,12 @@ class Game:
         if keys[pygame.K_LEFT] and self.player.jumping:
             self.player.facing_left = True
             self.player.facing_right = False
-            self.player.x -= self.player.vel
+            self.player.x -= self.player.jumping_vel
 
         if keys[pygame.K_RIGHT] and self.player.jumping:
             self.player.facing_left = False
             self.player.facing_right = True
-            self.player.x += self.player.vel
+            self.player.x += self.player.jumping_vel
 
     def gravity(self):
         if self.player.y < win_height - self.player.height and not self.player.jumping:
