@@ -19,7 +19,9 @@ class Player:
 
         self.x = win_width - self.width - 20  # 20 to not the edge
         self.y = 200
-        self.vel = 6
+        self.vel = 7
+
+        self.acc = 3
 
         self.facing_right = False
         self.facing_left = True
@@ -30,18 +32,15 @@ class Player:
         self.jumping = False
         self.jump_count = 5.25
 
+        self.falling = False
+
     def move_right(self):
         if not self.jumping:
             self.facing_right = True
             self.facing_left = False
             self.x += self.vel
 
-            if self.walk_count + 1 < self.image_changer * len(self.right_images):
-                self.walk_count += 1
-            else:
-                self.walk_count = 0
-
-            win.blit(self.right_images[self.walk_count // self.image_changer], (self.x, self.y))
+            self.blit_moving_right()
 
     def move_left(self):
         if not self.jumping:
@@ -49,12 +48,7 @@ class Player:
             self.facing_right = False
             self.x -= self.vel
 
-            if self.walk_count + 1 < self.image_changer * len(self.left_images):
-                self.walk_count += 1
-            else:
-                self.walk_count = 0
-
-            win.blit(self.left_images[self.walk_count // self.image_changer], (self.x, self.y))
+            self.blit_moving_left()
 
     def jump(self):
         self.jumping = True
@@ -76,7 +70,23 @@ class Player:
             elif self.facing_right:
                 win.blit(self.right_images[0], (self.x, self.y))
 
-    def stand(self):
+    def blit_moving_right(self):
+        if self.walk_count + 1 < self.image_changer * len(self.right_images):
+            self.walk_count += 1
+        else:
+            self.walk_count = 0
+
+        win.blit(self.right_images[self.walk_count // self.image_changer], (self.x, self.y))
+
+    def blit_moving_left(self):
+        if self.walk_count + 1 < self.image_changer * len(self.left_images):
+            self.walk_count += 1
+        else:
+            self.walk_count = 0
+
+        win.blit(self.left_images[self.walk_count // self.image_changer], (self.x, self.y))
+
+    def blit_standing(self):
         if not self.walking:
             if self.facing_left:
                 win.blit(self.left_images[0], (self.x, self.y))
