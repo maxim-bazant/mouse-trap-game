@@ -35,7 +35,7 @@ class Player:
 
         self.falling = False
 
-        self.mask = None
+        self.mask = pygame.mask.from_surface(self.right_images[0])
 
     def move_right(self):
         if not self.jumping:

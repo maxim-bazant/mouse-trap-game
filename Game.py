@@ -1,5 +1,6 @@
 import pygame
 
+from Collision import *
 from Player import Player
 from Floor import HorizontalFloor
 from settings import *
@@ -38,6 +39,17 @@ class Game:
         if not self.player.falling:
             self.player_movement(keys)
             self.player_jump(keys)
+        else:
+            if keys[pygame.K_LEFT]:
+                self.player.facing_left = True
+                self.player.facing_right = False
+                self.player.x -= self.player.jumping_vel
+                self.player.blit_standing()
+            elif keys[pygame.K_RIGHT]:
+                self.player.facing_left = False
+                self.player.facing_right = True
+                self.player.x += self.player.jumping_vel
+                self.player.blit_standing()
 
         if not self.player.walking or not self.player.jumping:
             self.player.blit_standing()
@@ -66,7 +78,8 @@ class Game:
             self.player.x += self.player.jumping_vel
 
     def gravity(self):
-        if self.player.y < win_height - self.player.height and not self.player.jumping:
+        if self.player.y < win_height - self.player.height and not self.player.jumping \
+           and not horizontal_collision(self.player, self.top_red_floor):
             self.player.falling = True
             self.player.y += self.player.acc
             self.player.acc += 0.1
