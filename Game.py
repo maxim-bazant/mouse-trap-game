@@ -1,6 +1,7 @@
 import pygame
 
 from Player import Player
+from Floor import HorizontalFloor
 from settings import *
 
 
