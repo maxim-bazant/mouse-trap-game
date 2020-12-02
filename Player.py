@@ -20,7 +20,7 @@ class Player:
         self.x = win_width - self.width - 20  # 20 to not the edge
         self.y = 200
         self.vel = 7
-        self.jumping_vel = 5
+        self.jumping_vel = 6
 
         self.acc = 3
 
@@ -35,7 +35,9 @@ class Player:
 
         self.falling = False
 
-        self.mask = pygame.mask.from_surface(self.right_images[0])
+        self.hit_box = (self.x, self.y, self.x + self.width // 2, self.y + self.height)
+
+        self.collision = False
 
     def move_right(self):
         if not self.jumping:
@@ -80,7 +82,6 @@ class Player:
             self.walk_count = 0
 
         win.blit(self.right_images[self.walk_count // self.image_changer], (self.x, self.y))
-        self.mask = pygame.mask.from_surface(self.right_images[self.walk_count // self.image_changer])
 
     def blit_moving_left(self):
         if self.walk_count + 1 < self.image_changer * len(self.left_images):
@@ -89,14 +90,11 @@ class Player:
             self.walk_count = 0
 
         win.blit(self.left_images[self.walk_count // self.image_changer], (self.x, self.y))
-        self.mask = pygame.mask.from_surface(self.left_images[self.walk_count // self.image_changer])
 
     def blit_standing(self):
         if not self.walking:
             if self.facing_left:
                 win.blit(self.left_images[0], (self.x, self.y))
-                self.mask = pygame.mask.from_surface(self.left_images[0])
             elif self.facing_right:
                 win.blit(self.right_images[0], (self.x, self.y))
-                self.mask = pygame.mask.from_surface(self.right_images[0])
 

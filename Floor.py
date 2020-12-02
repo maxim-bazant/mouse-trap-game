@@ -9,7 +9,7 @@ class HorizontalFloor:
         self.y = y
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
-        self.mask = pygame.mask.from_surface(self.image)
+        self.hit_box = (self.x, self.y, self.x + self.width, self.y + self.height)
 
         #  when showing floor take off self.x self.width and from self.y self.height
     def blit(self):
