@@ -19,6 +19,7 @@ class Player:
 
         self.x = win_width - self.width - 20  # 20 to not the edge
         self.y = 200
+
         self.vel = 7
         self.jumping_vel = 6
 

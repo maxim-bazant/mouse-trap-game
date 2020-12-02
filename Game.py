@@ -15,7 +15,7 @@ class Game:
         self.win = win
         self.player = Player()
         self.top_red_floor = HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png").convert_alpha(),
-                                             1500, 600)
+                                             win_width, self.player.y + self.player.height)
 
     def handle_events(self):
         for event in pygame.event.get():
