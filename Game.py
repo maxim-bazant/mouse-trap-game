@@ -14,7 +14,8 @@ class Game:
         self.win_height = win_height
         self.win = win
         self.player = Player()
-        self.top_red_floor = HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png"), win_width, 400)
+        self.top_red_floor = HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png").convert_alpha(),
+                                             1500, 600)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -40,12 +41,12 @@ class Game:
             self.player_movement(keys)
             self.player_jump(keys)
         else:
-            if keys[pygame.K_LEFT]:
+            if keys[pygame.K_LEFT] and self.player.x > 0:
                 self.player.facing_left = True
                 self.player.facing_right = False
                 self.player.x -= self.player.jumping_vel
                 self.player.blit_standing()
-            elif keys[pygame.K_RIGHT]:
+            elif keys[pygame.K_RIGHT] and self.player.x + self.player.width < win_width:
                 self.player.facing_left = False
                 self.player.facing_right = True
                 self.player.x += self.player.jumping_vel
@@ -56,10 +57,10 @@ class Game:
             self.player.walking = False
 
     def player_movement(self, keys):
-        if keys[pygame.K_LEFT] and not self.player.walking:
+        if keys[pygame.K_LEFT] and not self.player.walking and self.player.x > 0:
             self.player.move_left()
             self.player.walking = True
-        if keys[pygame.K_RIGHT] and not self.player.walking:
+        if keys[pygame.K_RIGHT] and not self.player.walking and self.player.x + self.player.width < win_width:
             self.player.move_right()
             self.player.walking = True
 
@@ -67,12 +68,13 @@ class Game:
         if keys[pygame.K_RCTRL] or self.player.jumping:
             self.player.jump()
 
-        if keys[pygame.K_LEFT] and self.player.jumping:
+        if keys[pygame.K_LEFT] and self.player.jumping and self.player.x > 0:
+            self.player.collision = True
             self.player.facing_left = True
             self.player.facing_right = False
             self.player.x -= self.player.jumping_vel
 
-        if keys[pygame.K_RIGHT] and self.player.jumping:
+        if keys[pygame.K_RIGHT] and self.player.jumping and self.player.x + self.player.width < win_width:
             self.player.facing_left = False
             self.player.facing_right = True
             self.player.x += self.player.jumping_vel
@@ -82,7 +84,7 @@ class Game:
            and not horizontal_collision(self.player, self.top_red_floor):
             self.player.falling = True
             self.player.y += self.player.acc
-            self.player.acc += 0.1
+            self.player.acc += 0.15
         else:
             self.player.falling = False
 

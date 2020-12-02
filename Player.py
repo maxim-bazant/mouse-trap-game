@@ -35,10 +35,6 @@ class Player:
 
         self.falling = False
 
-        self.hit_box = (self.x, self.y, self.x + self.width // 2, self.y + self.height)
-
-        self.collision = False
-
     def move_right(self):
         if not self.jumping:
             self.facing_right = True

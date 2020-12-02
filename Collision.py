@@ -5,5 +5,18 @@ from settings import *
 
 
 def horizontal_collision(player, floor):
-    pass
+    if abs((player.y + player.height) - floor.y) < 5:
+        if player.facing_left:
+            if player.x + player.width // 2 + 10 > floor.x - floor.width and player.x < floor.x:
+                player.acc = 7
+                return True
+            else:
+                return False
+        elif player.facing_right:
+            if player.x + player.width // 2 + 10 > floor.x - floor.width and player.x + player.width / 2 - 10 < floor.x:
+                player.acc = 7
+                return True
+            else:
+                return False
+
 
