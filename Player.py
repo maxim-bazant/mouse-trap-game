@@ -12,7 +12,7 @@ class Player:
         for number in ["01", "02", "03", "04", "05", "06", "07", "08"]:
             self.left_images.append(pygame.image.load(f"images/mouse/left/{number}.png").convert_alpha())
 
-        self.image_changer = 3
+        self.image_changer = 6
 
         self.width = self.right_images[0].get_rect().width
         self.height = self.right_images[0].get_rect().height
@@ -20,10 +20,10 @@ class Player:
         self.x = win_width - self.width - 20  # 20 to not the edge
         self.y = 200
 
-        self.vel = 7
-        self.jumping_vel = 6
+        self.vel = 4
+        self.jumping_vel = 3
 
-        self.acc = 3
+        self.acc = 5
 
         self.facing_right = False
         self.facing_left = True
@@ -32,38 +32,32 @@ class Player:
         self.walking = True
 
         self.jumping = False
-        self.jump_count = 5.25
+        self.jump_count = 4.5
 
         self.falling = False
 
     def move_right(self):
-        if not self.jumping:
-            self.facing_right = True
-            self.facing_left = False
-            self.x += self.vel
-
-            self.blit_moving_right()
+        self.facing_right = True
+        self.facing_left = False
+        self.x += self.vel
 
     def move_left(self):
-        if not self.jumping:
-            self.facing_left = True
-            self.facing_right = False
-            self.x -= self.vel
-
-            self.blit_moving_left()
+        self.facing_left = True
+        self.facing_right = False
+        self.x -= self.vel
 
     def jump(self):
         self.jumping = True
 
         if self.jumping:
-            if self.jump_count >= -5.25:
+            if self.jump_count >= -4.5:
                 neg = 1
                 if self.jump_count < 0:
                     neg = -1
                 self.y -= (self.jump_count ** 2) * 0.5 * neg
-                self.jump_count -= 0.25
+                self.jump_count -= 0.15
             else:
-                self.jump_count = 5.25
+                self.jump_count = 4.5
                 self.jumping = False
                 self.walking = True
 
