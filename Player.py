@@ -56,7 +56,7 @@ class Player:
                 if self.jump_count < 0:
                     neg = -1
                     self.reducing_y = True
-                self.y -= (self.jump_count ** 2) * 0.5 * neg
+                self.y -= round((self.jump_count ** 2) * 0.5 * neg)
                 self.jump_count -= 0.15
             else:
                 self.reducing_y = False
