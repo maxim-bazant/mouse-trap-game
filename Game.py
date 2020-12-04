@@ -20,8 +20,11 @@ class Game:
 
         self.floor = [Platform(pygame.image.load("images/floor/top_red_floor.png"), win_width,
                                self.player.y + self.player.height),
-                      Platform(pygame.image.load("images/floor/top_yellow_floor.png"),win_width - 320,
+                      Platform(pygame.image.load("images/floor/top_yellow_floor.png"), win_width - 320,
                                self.player.y + self.player.height)]
+
+        self.wall = [Platform(pygame.image.load("images/floor/golden_blocks.png"),
+                              self.floor[1].x - self.floor[1].width, self.player.y + self.player.height - 35)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -40,6 +43,8 @@ class Game:
 
         for floor in self.floor:
             floor.blit()
+        for wall in self.wall:
+            wall.blit()
 
         for floor in self.floor:
             if floor_collision(self.player, floor):
