@@ -19,9 +19,9 @@ class Game:
         self.touching = False
 
         self.floors = [HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png"), win_width,
-                                       self.player.y + self.player.height),
+                                       self.player.y + self.player.height + 750),
                        HorizontalFloor(pygame.image.load("images/floor/top_yellow_floor.png"), win_width - 320,
-                                       self.player.y + self.player.height)]
+                                       self.player.y + self.player.height + 750)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -51,13 +51,12 @@ class Game:
 
         if not self.player.falling:
             self.player_movement(keys)
-            if self.player.reducing_y and not self.touching:
+            if self.player.reducing_y and self.touching:
                 self.player.reducing_y = False
                 self.player.jump_count = 4.5
                 self.player.jumping = False
                 self.player.walking = True
             else:
-
                 self.player_jump(keys)
         else:
             if keys[pygame.K_LEFT] and self.player.x > 0:
