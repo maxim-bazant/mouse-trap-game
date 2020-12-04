@@ -64,10 +64,10 @@ class Game:
             else:
                 self.player_jump(keys)
         else:
-            if keys[pygame.K_LEFT] and self.player.x > 0:
+            if keys[pygame.K_LEFT] and self.player.x > 0 and self.player.can_walk_left:
                 self.player.move_left()
                 self.player.blit_standing()
-            elif keys[pygame.K_RIGHT] and self.player.x + self.player.width < win_width:
+            elif keys[pygame.K_RIGHT] and self.player.x + self.player.width < win_width and self.player.can_walk_right:
                 self.player.move_right()
                 self.player.blit_standing()
 
@@ -76,11 +76,12 @@ class Game:
             self.player.walking = False
 
     def player_movement(self, keys):
-        if keys[pygame.K_LEFT] and not self.player.walking and self.player.x > 0:
+        if keys[pygame.K_LEFT] and not self.player.walking and self.player.x > 0 and self.player.can_walk_left:
             self.player.move_left()
             self.player.blit_moving_left()
             self.player.walking = True
-        if keys[pygame.K_RIGHT] and not self.player.walking and self.player.x + self.player.width < win_width:
+        if keys[pygame.K_RIGHT] and not self.player.walking and self.player.x + self.player.width < win_width \
+                and self.player.can_walk_right:
             self.player.move_right()
             self.player.blit_moving_right()
             self.player.walking = True
@@ -89,11 +90,12 @@ class Game:
         if keys[pygame.K_RCTRL] or self.player.jumping:
             self.player.jump()
 
-        if keys[pygame.K_LEFT] and self.player.jumping and self.player.x > 0:
+        if keys[pygame.K_LEFT] and self.player.jumping and self.player.x > 0 and self.player.can_walk_left:
             self.player.move_left()
             self.player.blit_standing()
 
-        if keys[pygame.K_RIGHT] and self.player.jumping and self.player.x + self.player.width < win_width:
+        if keys[pygame.K_RIGHT] and self.player.jumping and self.player.x + self.player.width < win_width \
+                and self.player.can_walk_right:
             self.player.move_right()
             self.player.blit_standing()
 

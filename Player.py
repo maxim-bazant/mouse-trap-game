@@ -31,6 +31,9 @@ class Player:
         self.walk_count = 0
         self.walking = True
 
+        self.can_walk_left = True
+        self.can_walk_right = True
+
         self.jumping = False
         self.jump_count = 4.5
 

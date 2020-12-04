@@ -20,5 +20,5 @@ def floor_collision(player, floor):  # can go through vertically but not horizon
                 return False
 
 
-def wall_collision():  # can not go vertically or horizontally
-    pass
+def wall_collision(player, wall):  # can not go vertically or horizontally
+    pass  # will use mask and by offset detect from what direction is player touching wall
