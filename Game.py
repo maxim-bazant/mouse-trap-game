@@ -2,7 +2,7 @@ import pygame
 
 from Collision import *
 from Player import Player
-from Floor import HorizontalFloor
+from Platform import Platform
 from settings import *
 
 
@@ -14,14 +14,14 @@ class Game:
         self.win_height = win_height
         self.win = win
         self.player = Player()
-        self.top_red_floor = HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png"),
-                                             win_width, self.player.y + self.player.height)
+        self.top_red_floor = Platform(pygame.image.load("images/floor/top_red_floor.png"),
+                                      win_width, self.player.y + self.player.height)
         self.touching = False
 
-        self.floors = [HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png"), win_width,
-                                       self.player.y + self.player.height + 750),
-                       HorizontalFloor(pygame.image.load("images/floor/top_yellow_floor.png"), win_width - 320,
-                                       self.player.y + self.player.height + 750)]
+        self.floor = [Platform(pygame.image.load("images/floor/top_red_floor.png"), win_width,
+                               self.player.y + self.player.height),
+                      Platform(pygame.image.load("images/floor/top_yellow_floor.png"),win_width - 320,
+                               self.player.y + self.player.height)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -38,11 +38,11 @@ class Game:
         self.touching = False
         self.handle_events()
 
-        for floor in self.floors:
+        for floor in self.floor:
             floor.blit()
 
-        for floor in self.floors:
-            if horizontal_collision(self.player, floor):
+        for floor in self.floor:
+            if floor_collision(self.player, floor):
                 self.touching = True
 
         keys = pygame.key.get_pressed()
