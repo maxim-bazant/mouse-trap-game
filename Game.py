@@ -39,7 +39,14 @@ class Game:
 
         if not self.player.falling:
             self.player_movement(keys)
-            self.player_jump(keys)
+            if self.player.reducing_y and horizontal_collision(self.player, self.top_red_floor):
+                self.player.reducing_y = False
+                self.player.jump_count = 4.5
+                self.player.jumping = False
+                self.player.walking = True
+            else:
+
+                self.player_jump(keys)
         else:
             if keys[pygame.K_LEFT] and self.player.x > 0:
                 self.player.move_left()

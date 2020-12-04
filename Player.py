@@ -35,6 +35,7 @@ class Player:
         self.jump_count = 4.5
 
         self.falling = False
+        self.reducing_y = False
 
     def move_right(self):
         self.facing_right = True
@@ -54,9 +55,11 @@ class Player:
                 neg = 1
                 if self.jump_count < 0:
                     neg = -1
+                    self.reducing_y = True
                 self.y -= (self.jump_count ** 2) * 0.5 * neg
                 self.jump_count -= 0.15
             else:
+                self.reducing_y = False
                 self.jump_count = 4.5
                 self.jumping = False
                 self.walking = True
