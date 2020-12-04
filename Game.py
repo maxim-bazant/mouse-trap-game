@@ -16,6 +16,12 @@ class Game:
         self.player = Player()
         self.top_red_floor = HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png"),
                                              win_width, self.player.y + self.player.height)
+        self.touching = False
+
+        self.floors = [HorizontalFloor(pygame.image.load("images/floor/top_red_floor.png"), win_width,
+                                       self.player.y + self.player.height),
+                       HorizontalFloor(pygame.image.load("images/floor/top_yellow_floor.png"), win_width - 320,
+                                       self.player.y + self.player.height)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -29,9 +35,15 @@ class Game:
         pass
 
     def game(self):
+        self.touching = False
         self.handle_events()
 
-        self.top_red_floor.blit()
+        for floor in self.floors:
+            floor.blit()
+
+        for floor in self.floors:
+            if horizontal_collision(self.player, floor):
+                self.touching = True
 
         keys = pygame.key.get_pressed()
 
@@ -39,7 +51,7 @@ class Game:
 
         if not self.player.falling:
             self.player_movement(keys)
-            if self.player.reducing_y and horizontal_collision(self.player, self.top_red_floor):
+            if self.player.reducing_y and not self.touching:
                 self.player.reducing_y = False
                 self.player.jump_count = 4.5
                 self.player.jumping = False
@@ -83,7 +95,7 @@ class Game:
 
     def gravity(self):
         if self.player.y < win_height - self.player.height and not self.player.jumping \
-           and not horizontal_collision(self.player, self.top_red_floor):
+           and not self.touching:
             self.player.falling = True
             self.player.y += self.player.acc
         else:
@@ -105,9 +117,3 @@ while g.running:
 
     g.clock.tick(FPS)
     pygame.display.update()
-
-
-
-
-
-
