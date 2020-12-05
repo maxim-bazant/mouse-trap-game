@@ -43,12 +43,16 @@ class Game:
 
         for floor in self.floor:
             floor.blit()
-        for wall in self.wall:
-            wall.blit()
 
         for floor in self.floor:
             if floor_collision(self.player, floor):
                 self.touching = True
+
+        for wall in self.wall:
+            wall.blit()
+
+        for wall in self.wall:
+            print(wall_collision(self.player, wall))
 
         keys = pygame.key.get_pressed()
 
