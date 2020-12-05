@@ -9,7 +9,6 @@ class Platform:
         self.y = y
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
-        self.mask = pygame.mask.from_surface(self.image)
 
     def blit(self):
         win.blit(self.image, (self.x - self.width, self.y))

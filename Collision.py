@@ -21,8 +21,59 @@ def floor_collision(player, floor):  # can go through vertically but not horizon
 
 
 def wall_collision(player, wall):  # can not go vertically or horizontally
-    offset = (player.x - (wall.x - wall.width), player.y - wall.y)
-    collision = wall.mask.overlap(player.mask, offset)
+    #  only x collision (only horizontal collision)
+    if wall.y < player.y + player.height and not player.y > wall.y + wall.height:
+        if player.facing_left:
+            player.can_walk_right = True
+            if wall.x - wall.width < player.x < wall.x:
+                player.can_walk_left = False
 
-    if collision:
-        return offset
+        if player.facing_right:
+            player.can_walk_left = True
+            if wall.x - wall.width < player.x + player.width < wall.x:
+                player.can_walk_right = False
+    else:
+        player.can_walk_right = True
+        player.can_walk_left = True
+
+    # y collision same code as floor_collision which is used for vertical collision only
+    if abs((player.y + player.height) - wall.y) < 5:
+        if player.facing_left:
+            if player.x + 10 < wall.x and player.x + player.width // 2 + 5 > wall.x - wall.width:
+                player.y += abs((player.y + player.height) - wall.y)
+                return True
+            else:
+                return False
+
+        if player.facing_right:
+            if player.x + player.width - 10 < wall.x + wall.width and player.x - 5 + player.width > wall.x - wall.width:
+                player.y += abs((player.y + player.height) - wall.y)
+                return True
+            else:
+                return False
+
+    if abs(player.y - wall.y - wall.height) < 5 and not player.falling:
+        player.y -= player.y - wall.y - wall.height
+        player.no_jump_up = True
+    else:
+        player.no_jump_up = False
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

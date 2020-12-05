@@ -36,11 +36,13 @@ class Player:
 
         self.jumping = False
         self.jump_count = 4.5
+        self.can_not_jump = False
+        self.no_jump_up = False
 
         self.falling = False
         self.reducing_y = False
 
-        self.mask = pygame.mask.from_surface(self.right_images[0])
+        self.move_a_little_bit = False
 
     def move_right(self):
         self.facing_right = True
