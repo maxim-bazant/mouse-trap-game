@@ -40,6 +40,8 @@ class Player:
         self.falling = False
         self.reducing_y = False
 
+        self.mask = pygame.mask.from_surface(self.right_images[0])
+
     def move_right(self):
         self.facing_right = True
         self.facing_left = False
@@ -69,8 +71,10 @@ class Player:
 
             if self.facing_left:
                 win.blit(self.left_images[0], (self.x, self.y))
+                self.mask = pygame.mask.from_surface(self.left_images[0])
             elif self.facing_right:
                 win.blit(self.right_images[0], (self.x, self.y))
+                self.mask = pygame.mask.from_surface(self.right_images[0])
 
     def blit_moving_right(self):
         if self.walk_count + 1 < self.image_changer * len(self.right_images):
@@ -78,6 +82,7 @@ class Player:
         else:
             self.walk_count = 0
 
+        self.mask = pygame.mask.from_surface(self.right_images[self.walk_count // self.image_changer])
         win.blit(self.right_images[self.walk_count // self.image_changer], (self.x, self.y))
 
     def blit_moving_left(self):
@@ -86,12 +91,15 @@ class Player:
         else:
             self.walk_count = 0
 
+        self.mask = pygame.mask.from_surface(self.left_images[self.walk_count // self.image_changer])
         win.blit(self.left_images[self.walk_count // self.image_changer], (self.x, self.y))
 
     def blit_standing(self):
         if not self.walking:
             if self.facing_left:
                 win.blit(self.left_images[0], (self.x, self.y))
+                self.mask = pygame.mask.from_surface(self.left_images[0])
             elif self.facing_right:
                 win.blit(self.right_images[0], (self.x, self.y))
+                self.mask = pygame.mask.from_surface(self.right_images[0])
 
