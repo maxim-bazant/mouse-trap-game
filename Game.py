@@ -56,19 +56,28 @@ class Game:
 
         if self.player.falling_down_from_wall and self.player.falling:
             if self.player.facing_left:
-                for move in range(4):
-                    self.player.x -= 15
-                    self.player.move_done += 1
-                if self.player.move_done == 4:
-                    self.player.falling_down_from_wall = False
-                    self.player.move_done = 0
+                self.player.fall_left = True
             elif self.player.facing_right:
-                for move in range(4):
-                    self.player.x += 10
-                    self.player.move_done += 1
-                if self.player.move_done == 4:
-                    self.player.falling_down_from_wall = False
-                    self.player.move_done = 0
+                self.player.fall_right = True
+
+        if self.player.fall_left:
+            if self.player.move_done < 16:
+                self.player.x -= 3
+                self.player.move_done += 1
+                self.player.can_walk_right = False
+            if self.player.move_done == 16:
+                self.player.falling_down_from_wall = False
+                self.player.move_done = 0
+                self.player.fall_left = False
+        if self.player.fall_right:
+            if self.player.move_done < 16:
+                self.player.x += 3
+                self.player.move_done += 1
+                self.player.can_walk_left = False
+            if self.player.move_done == 16:
+                self.player.falling_down_from_wall = False
+                self.player.move_done = 0
+                self.player.fall_right = False
 
         keys = pygame.key.get_pressed()
 
