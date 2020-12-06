@@ -13,7 +13,7 @@ def floor_collision(player, floor):  # can go through vertically but not horizon
             else:
                 return False
         elif player.facing_right:
-            if player.x + player.width // 2 + 10 > floor.x - floor.width and player.x + player.width / 2 - 10 < floor.x:
+            if player.x + player.width > floor.x - floor.width and player.x + player.width / 2 - 10 < floor.x:
                 player.y += abs((player.y + player.height) - floor.y)
                 return True
             else:
@@ -21,7 +21,8 @@ def floor_collision(player, floor):  # can go through vertically but not horizon
 
 
 def wall_collision(player, wall):  # can not go vertically or horizontally
-    #  only x collision (only horizontal collision)
+    pass
+    """#  only x collision (only horizontal collision)
     if wall.y < player.y + player.height and not player.y > wall.y + wall.height:
         if player.facing_left:
             player.can_walk_right = True
@@ -59,7 +60,7 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
         player.y -= player.y - wall.y - wall.height
         player.no_jump_up = True
     else:
-        player.no_jump_up = False
+        player.no_jump_up = False"""
 
 
 

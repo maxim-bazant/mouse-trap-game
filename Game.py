@@ -14,16 +14,26 @@ class Game:
         self.win_height = win_height
         self.win = win
         self.player = Player()
-        self.top_red_floor = Platform(pygame.image.load("images/floor/top_red_floor.png"),
+        self.top_red_floor = Platform(pygame.image.load("images/floor/red_floor_5.png"),
                                       win_width, self.player.y + self.player.height)
 
-        self.floor = [Platform(pygame.image.load("images/floor/top_red_floor.png"), win_width,
+        self.floor = [Platform(pygame.image.load("images/floor/red_floor_5.png"), win_width,
                                self.player.y + self.player.height),
                       Platform(pygame.image.load("images/floor/top_yellow_floor.png"), win_width - 320,
-                               self.player.y + self.player.height)]
+                               self.player.y + self.player.height),
+                      Platform(pygame.image.load("images/floor/red_floor_1.png"), 128, win_height - 128),
+                      Platform(pygame.image.load("images/floor/red_floor_2.png"), 128, win_height - 64),
+                      Platform(pygame.image.load("images/floor/red_floor_8.png"), 128 + 512 + 64, win_height - 64),
+                      Platform(pygame.image.load("images/floor/red_floor_8.png"), 128 + 512 + 64, win_height - 192),
+                      Platform(pygame.image.load("images/floor/red_floor_7.png"), 128 + 512 + 64, win_height - 128),
+                      Platform(pygame.image.load("images/floor/red_floor_4.png"), win_width,
+                               win_height - 64)]
 
         self.wall = [Platform(pygame.image.load("images/floor/golden_blocks.png"),
-                              self.floor[1].x - self.floor[1].width, self.player.y + self.player.height - 35)]
+                              self.floor[1].x - self.floor[1].width, self.player.y + self.player.height - 35),
+                     Platform(pygame.image.load("images/floor/stone_wall_3.png"), self.floor[1].x - self.floor[1].width,
+                              win_height - 192),
+                     Platform(pygame.image.load("images/floor/stone_wall_2.png"), self.floor[5].x + 64, win_height - 128)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -132,8 +142,7 @@ class Game:
             self.player.blit_standing()
 
     def gravity(self):
-        if self.player.y < win_height - self.player.height and not self.player.jumping \
-                and not self.player.can_not_jump:
+        if not self.player.jumping and not self.player.can_not_jump:
             self.player.falling = True
             self.player.y += self.player.acc
         else:
