@@ -50,6 +50,7 @@ class Game:
         self.player.can_walk_left = True
         self.player.can_walk_right = True
         self.player.can_not_jump = False
+        self.player.no_jump_up = False
         self.handle_events()
 
         for floor in self.floor:
@@ -63,39 +64,14 @@ class Game:
             wall.blit()
 
         for wall in self.wall:
-            if wall_collision(self.player, wall):
-                self.player.can_not_jump = True
             if wall_collision(self.player, wall) == 0:
                 self.player.can_walk_left = False
             elif wall_collision(self.player, wall) == 1:
                 self.player.can_walk_right = False
-
-        # bugging into wall bug done
-        if self.player.falling_down_from_wall and self.player.falling:
-            if self.player.facing_left:
-                self.player.fall_left = True
-            elif self.player.facing_right:
-                self.player.fall_right = True
-
-        if self.player.fall_left:
-            if self.player.move_done < 16:
-                self.player.x -= self.player.vel
-                self.player.move_done += 1
-                self.player.can_walk_right = False
-            if self.player.move_done == 16:
-                self.player.falling_down_from_wall = False
-                self.player.move_done = 0
-                self.player.fall_left = False
-        if self.player.fall_right:
-            if self.player.move_done < 16:
-                self.player.x += self.player.vel
-                self.player.move_done += 1
-                self.player.can_walk_left = False
-            if self.player.move_done == 16:
-                self.player.falling_down_from_wall = False
-                self.player.move_done = 0
-                self.player.fall_right = False
-        #
+            elif wall_collision(self.player, wall) == 3:
+                self.player.can_not_jump = True
+            elif wall_collision(self.player, wall) == 4:
+                self.player.no_jump_up = True
 
         keys = pygame.key.get_pressed()
 
