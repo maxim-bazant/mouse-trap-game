@@ -54,6 +54,7 @@ class Game:
             if wall_collision(self.player, wall):
                 self.player.can_not_jump = True
 
+        # bugging into wall bug done
         if self.player.falling_down_from_wall and self.player.falling:
             if self.player.facing_left:
                 self.player.fall_left = True
@@ -78,6 +79,7 @@ class Game:
                 self.player.falling_down_from_wall = False
                 self.player.move_done = 0
                 self.player.fall_right = False
+        #
 
         keys = pygame.key.get_pressed()
 
