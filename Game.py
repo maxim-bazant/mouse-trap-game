@@ -62,7 +62,7 @@ class Game:
 
         if self.player.fall_left:
             if self.player.move_done < 16:
-                self.player.x -= 3
+                self.player.x -= self.player.vel
                 self.player.move_done += 1
                 self.player.can_walk_right = False
             if self.player.move_done == 16:
@@ -71,7 +71,7 @@ class Game:
                 self.player.fall_left = False
         if self.player.fall_right:
             if self.player.move_done < 16:
-                self.player.x += 3
+                self.player.x += self.player.vel
                 self.player.move_done += 1
                 self.player.can_walk_left = False
             if self.player.move_done == 16:
