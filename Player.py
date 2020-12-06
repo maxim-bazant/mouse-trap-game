@@ -12,7 +12,7 @@ class Player:
         for number in ["01", "02", "03", "04", "05", "06", "07", "08"]:
             self.left_images.append(pygame.image.load(f"images/mouse/left/{number}.png").convert_alpha())
 
-        self.image_changer = 6
+        self.image_changer = 7
 
         self.width = self.right_images[0].get_rect().width
         self.height = self.right_images[0].get_rect().height
@@ -20,7 +20,7 @@ class Player:
         self.x = win_width - self.width - 20  # 20 to not the edge
         self.y = 200
 
-        self.vel = 4
+        self.vel = 3
         self.jumping_vel = 3
 
         self.acc = 5
@@ -42,7 +42,8 @@ class Player:
         self.falling = False
         self.reducing_y = False
 
-        self.move_a_little_bit = False
+        self.falling_down_from_wall = False
+        self.move_done = 0
 
     def move_right(self):
         self.facing_right = True

@@ -54,6 +54,22 @@ class Game:
             if wall_collision(self.player, wall):
                 self.player.can_not_jump = True
 
+        if self.player.falling_down_from_wall and self.player.falling:
+            if self.player.facing_left:
+                for move in range(4):
+                    self.player.x -= 15
+                    self.player.move_done += 1
+                if self.player.move_done == 4:
+                    self.player.falling_down_from_wall = False
+                    self.player.move_done = 0
+            elif self.player.facing_right:
+                for move in range(4):
+                    self.player.x += 10
+                    self.player.move_done += 1
+                if self.player.move_done == 4:
+                    self.player.falling_down_from_wall = False
+                    self.player.move_done = 0
+
         keys = pygame.key.get_pressed()
 
         self.gravity()

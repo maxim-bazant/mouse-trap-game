@@ -39,15 +39,18 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
     # y collision same code as floor_collision which is used for vertical collision only
     if abs((player.y + player.height) - wall.y) < 5:
         if player.facing_left:
-            if player.x + 10 < wall.x and player.x + player.width // 2 + 5 > wall.x - wall.width:
+            if player.x + 5 < wall.x and player.x + player.width // 2 + 5 > wall.x - wall.width:
                 player.y += abs((player.y + player.height) - wall.y)
+                player.move_a_little_bit_right = True
+                player.falling_down_from_wall = True
                 return True
             else:
                 return False
 
         if player.facing_right:
-            if player.x + player.width - 10 < wall.x + wall.width and player.x - 5 + player.width > wall.x - wall.width:
+            if player.x + player.width - 5 < wall.x + wall.width and player.x - 5 + player.width > wall.x - wall.width:
                 player.y += abs((player.y + player.height) - wall.y)
+                player.falling_down_from_wall = True
                 return True
             else:
                 return False
