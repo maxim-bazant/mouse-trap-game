@@ -30,8 +30,11 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
                not player.x + player.width // 2 + 10 > wall.x:
                 return 1  # 1 for not able to walk right
 
-    if player.y + player.height > wall.y:
-        pass
+    if abs((player.y + player.height) - wall.y) < 5:
+        player.y += abs((player.y + player.height) - wall.y)
+        return 3
+
+
     """#  only x collision (only horizontal collision)
     if wall.y < player.y + player.height and not player.y > wall.y + wall.height:
         if player.facing_left:
