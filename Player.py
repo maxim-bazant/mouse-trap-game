@@ -1,4 +1,5 @@
 import pygame
+import decimal
 from settings import *
 
 
@@ -18,7 +19,7 @@ class Player:
         self.height = self.right_images[0].get_rect().height
 
         self.x = win_width - self.width - 20  # 20 to not the edge
-        self.y = 200
+        self.y = 150
 
         self.vel = 3
         self.jumping_vel = 3

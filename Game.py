@@ -47,6 +47,8 @@ class Game:
         pass
 
     def game(self):
+        self.player.can_walk_left = True
+        self.player.can_walk_right = True
         self.player.can_not_jump = False
         self.handle_events()
 
@@ -63,6 +65,10 @@ class Game:
         for wall in self.wall:
             if wall_collision(self.player, wall):
                 self.player.can_not_jump = True
+            if wall_collision(self.player, wall) == 0:
+                self.player.can_walk_left = False
+            elif wall_collision(self.player, wall) == 1:
+                self.player.can_walk_right = False
 
         # bugging into wall bug done
         if self.player.falling_down_from_wall and self.player.falling:
