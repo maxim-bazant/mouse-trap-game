@@ -31,49 +31,28 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
                 return 1  # 1 for not able to walk right
 
     if abs((player.y + player.height) - wall.y) < 5:
-        player.y += abs((player.y + player.height) - wall.y)
-        return 3
-
-
-    """#  only x collision (only horizontal collision)
-    if wall.y < player.y + player.height and not player.y > wall.y + wall.height:
         if player.facing_left:
-            player.can_walk_right = True
-            if wall.x - wall.width < player.x < wall.x:
-                player.can_walk_left = False
+            if player.x + 10 < wall.x and player.x + player.width // 2 > wall.x - wall.width:
+                player.y += abs((player.y + player.height) - wall.y)
+                return 3
 
         if player.facing_right:
-            player.can_walk_left = True
-            if wall.x - wall.width < player.x + player.width < wall.x:
-                player.can_walk_right = False
-    else:
-        player.can_walk_right = True
-        player.can_walk_left = True
-
-    # y collision same code as floor_collision which is used for vertical collision only
-    if abs((player.y + player.height) - wall.y) < 5:
-        if player.facing_left:
-            if player.x + 5 < wall.x and player.x + player.width // 2 + 5 > wall.x - wall.width:
+            if player.x + player.width + 10 > wall.x - wall.width and \
+               player.x - player.width // 2 - 20 < wall.x - wall.width * 2:
                 player.y += abs((player.y + player.height) - wall.y)
-                player.move_a_little_bit_right = True
-                player.falling_down_from_wall = True
-                return True
-            else:
-                return False
-
-        if player.facing_right:
-            if player.x + player.width - 5 < wall.x + wall.width and player.x - 5 + player.width > wall.x - wall.width:
-                player.y += abs((player.y + player.height) - wall.y)
-                player.falling_down_from_wall = True
-                return True
-            else:
-                return False
+                return 3
 
     if abs(player.y - wall.y - wall.height) < 5 and not player.falling:
-        player.y -= player.y - wall.y - wall.height
-        player.no_jump_up = True
-    else:
-        player.no_jump_up = False"""
+        if player.facing_left:
+            if player.x + 10 < wall.x and player.x + player.width // 2 > wall.x - wall.width:
+                return 4
+
+        if player.facing_right:
+            if player.x + player.width + 10 > wall.x - wall.width and \
+                    player.x - player.width // 2 - 20 < wall.x - wall.width * 2:
+                return 4
+
+
 
 
 
