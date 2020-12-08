@@ -128,14 +128,14 @@ class Game:
             self.player.blit_standing()
 
     def gravity(self):
-        if not self.player.jumping and not self.player.can_not_jump and not self.player.y > 620:
+        if not self.player.jumping and not self.player.can_not_jump and not self.player.y > win_height - 160:
             self.player.falling = True
             self.player.y += self.player.acc
         else:
             self.player.falling = False
 
-        if self.player.y > 620:
-            self.player.y = 620
+        if self.player.y > win_height - 160:
+            self.player.y = win_height - 160
 
     def run(self):
         self.start_screen()
