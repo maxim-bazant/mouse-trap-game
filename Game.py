@@ -47,7 +47,6 @@ class Game:
         pass
 
     def game(self):
-        print(self.floor[3].x)
         self.player.can_walk_left = True
         self.player.can_walk_right = True
         self.player.can_not_jump = False
@@ -129,7 +128,6 @@ class Game:
             self.player.blit_standing()
 
     def gravity(self):
-        print(self.player.y)
         if not self.player.jumping and not self.player.can_not_jump and not self.player.y > 620:
             self.player.falling = True
             self.player.y += self.player.acc
