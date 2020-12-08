@@ -47,6 +47,7 @@ class Game:
         pass
 
     def game(self):
+        print(self.floor[3].x)
         self.player.can_walk_left = True
         self.player.can_walk_right = True
         self.player.can_not_jump = False
@@ -99,12 +100,12 @@ class Game:
             self.player.walking = False
 
     def player_movement(self, keys):
-        if keys[pygame.K_LEFT] and not self.player.walking:
+        if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping:
             if self.player.can_walk_left and self.player.x > 0 and self.player.can_walk_left:
                 self.player.move_left()
             self.player.walking = True
             self.player.blit_moving_left()
-        if keys[pygame.K_RIGHT] and not self.player.walking:
+        if keys[pygame.K_RIGHT] and not self.player.walking and not self.player.jumping:
             if self.player.can_walk_right and self.player.x + self.player.width < win_width:
                 self.player.move_right()
             self.player.walking = True
@@ -112,23 +113,31 @@ class Game:
 
     def player_jump(self, keys):
         if keys[pygame.K_RCTRL] or self.player.jumping:
-            self.player.jump()
+            if self.player.walking:
+                if self.player.facing_left:
+                    self.player.jump()
+                    if self.player.jumping and self.player.x > 0 and self.player.can_walk_left:
+                        self.player.x -= self.player.jumping_vel
 
-        if keys[pygame.K_LEFT] and self.player.jumping and self.player.x > 0 and self.player.can_walk_left:
-            self.player.move_left()
-            self.player.blit_standing()
-
-        if keys[pygame.K_RIGHT] and self.player.jumping and self.player.x + self.player.width < win_width \
-                and self.player.can_walk_right:
-            self.player.move_right()
+                elif self.player.facing_right:
+                    self.player.jump()
+                    if self.player.jumping and self.player.x + self.player.width < win_width\
+                            and self.player.can_walk_right:
+                        self.player.x += self.player.jumping_vel
+            else:
+                self.player.jump()
             self.player.blit_standing()
 
     def gravity(self):
-        if not self.player.jumping and not self.player.can_not_jump:
+        print(self.player.y)
+        if not self.player.jumping and not self.player.can_not_jump and not self.player.y > 620:
             self.player.falling = True
             self.player.y += self.player.acc
         else:
             self.player.falling = False
+
+        if self.player.y > 620:
+            self.player.y = 620
 
     def run(self):
         self.start_screen()
