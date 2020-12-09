@@ -111,7 +111,7 @@ class Game:
             self.player.blit_moving_right()
 
     def player_jump(self, keys):
-        if keys[pygame.K_RCTRL] or self.player.jumping:
+        if keys[pygame.K_SPACE] or self.player.jumping:
             if self.player.walking:
                 if self.player.facing_left:
                     self.player.jump()
