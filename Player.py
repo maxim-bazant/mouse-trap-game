@@ -43,6 +43,9 @@ class Player:
         self.falling = False
         self.reducing_y = False
 
+        self.move_left_bc_tha_wall = False
+        self.move_right_bc_tha_wall = False
+
     def move_right(self):
         self.facing_right = True
         self.facing_left = False
