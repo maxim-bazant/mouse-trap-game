@@ -33,7 +33,8 @@ class Game:
                               self.floor[1].x - self.floor[1].width, self.player.y + self.player.height - 35),
                      Platform(pygame.image.load("images/floor/stone_wall_3.png"), self.floor[1].x - self.floor[1].width,
                               win_height - 192),
-                     Platform(pygame.image.load("images/floor/stone_wall_2.png"), self.floor[5].x + 64, win_height - 128)]
+                     Platform(pygame.image.load("images/floor/stone_wall_2.png"), self.floor[5].x + 64,
+                              win_height - 128)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -64,9 +65,9 @@ class Game:
             wall.blit()
 
         for wall in self.wall:
-            if wall_collision(self.player, wall) == 0:
+            if wall_collision(self.player, wall) == 1:
                 self.player.can_walk_left = False
-            elif wall_collision(self.player, wall) == 1:
+            elif wall_collision(self.player, wall) == 2:
                 self.player.can_walk_right = False
             elif wall_collision(self.player, wall) == 3:
                 self.player.can_not_jump = True
