@@ -3,6 +3,7 @@ import pygame
 from Collision import *
 from Player import Player
 from Platform import Platform
+from Ball import Ball
 from settings import *
 
 
@@ -36,6 +37,10 @@ class Game:
                      Platform(pygame.image.load("images/floor/stone_wall_2.png"), self.floor[5].x + 64,
                               win_height - 128)]
 
+        self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
+                      Ball(64, self.wall[1].y - 64),
+                      Ball(self.wall[1].x, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -48,21 +53,7 @@ class Game:
         pass
 
     def game(self):
-        self.player.can_walk_left = True
-        self.player.can_walk_right = True
-        self.player.can_not_jump = False
-        self.player.no_jump_up = False
-        self.handle_events()
-
-        for floor in self.floor:
-            floor.blit()
-
-        for floor in self.floor:
-            if floor_collision(self.player, floor):
-                self.player.can_not_jump = True
-
-        for wall in self.wall:
-            wall.blit()
+        self.blit_and_init()
 
         for wall in self.wall:
             if wall_collision(self.player, wall) == 1:
@@ -76,9 +67,9 @@ class Game:
 
         if self.player.move_left_bc_tha_wall:
             self.player.can_walk_right = False
-            self.player.x -= self.player.vel - 0.5
+            self.player.x -= self.player.vel - 0.4
         elif self.player.move_right_bc_tha_wall:
-            self.player.x += self.player.vel - 0.5
+            self.player.x += self.player.vel - 0.4
             self.player.can_walk_left = False
 
         keys = pygame.key.get_pressed()
@@ -105,6 +96,26 @@ class Game:
         if not self.player.walking or not self.player.jumping:
             self.player.blit_standing()
             self.player.walking = False
+
+    def blit_and_init(self):
+        self.player.can_walk_left = True
+        self.player.can_walk_right = True
+        self.player.can_not_jump = False
+        self.player.no_jump_up = False
+        self.handle_events()
+
+        for floor in self.floor:
+            floor.blit()
+
+        for floor in self.floor:
+            if floor_collision(self.player, floor):
+                self.player.can_not_jump = True
+
+        for wall in self.wall:
+            wall.blit()
+
+        for ball in self.balls:
+            ball.show_and_move()
 
     def player_movement(self, keys):
         if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping:

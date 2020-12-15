@@ -22,7 +22,7 @@ class Player:
         self.y = 150
 
         self.vel = 3
-        self.jumping_vel = 4
+        self.jumping_vel = 3
 
         self.acc = 5
 
