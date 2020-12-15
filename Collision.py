@@ -75,13 +75,8 @@ def ball_collision(player, ball):
         return True
 
 
-
-
-
-
-
-
-
+def flower_collision(player, flower):
+    pass
 
 
 
