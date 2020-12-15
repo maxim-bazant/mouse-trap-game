@@ -8,6 +8,7 @@ class Ball(object):
         self.image = pygame.image.load("images/ball.png")
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
+        self.mask = pygame.mask.from_surface(self.image)
         """self.mc_default = 192
         self.move_count = self.mc_default"""  # moving
 

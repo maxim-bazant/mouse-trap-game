@@ -65,6 +65,10 @@ class Game:
             elif wall_collision(self.player, wall) == 4:
                 self.player.no_jump_up = True
 
+        for ball in self.balls:
+            if ball_collision(self.player, ball):
+                self.balls.remove(ball)
+
         if self.player.move_left_bc_tha_wall:
             self.player.can_walk_right = False
             self.player.x -= self.player.vel - 0.4

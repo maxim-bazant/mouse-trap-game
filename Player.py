@@ -15,6 +15,8 @@ class Player:
 
         self.image_changer = 7
 
+        self.mask = pygame.mask.from_surface(self.left_images[0])
+
         self.width = self.right_images[0].get_rect().width
         self.height = self.right_images[0].get_rect().height
 
