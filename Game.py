@@ -4,6 +4,7 @@ from Collision import *
 from Player import Player
 from Platform import Platform
 from Ball import Ball
+from Flower import Flower
 from settings import *
 
 
@@ -15,8 +16,8 @@ class Game:
         self.win_height = win_height
         self.win = win
         self.player = Player()
-        self.top_red_floor = Platform(pygame.image.load("images/floor/red_floor_5.png"),
-                                      win_width, self.player.y + self.player.height)
+
+        self.flower = Flower(win_width // 2 - 75, self.player.y + self.player.height - 60)
 
         self.floor = [Platform(pygame.image.load("images/floor/red_floor_5.png"), win_width,
                                self.player.y + self.player.height),
@@ -120,6 +121,8 @@ class Game:
 
         for ball in self.balls:
             ball.show_and_move()
+
+        self.flower.show_me()
 
     def player_movement(self, keys):
         if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping:
