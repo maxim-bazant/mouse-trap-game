@@ -69,7 +69,7 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
 
 
 def ball_collision(player, ball):
-    offset = (player.x - ball.x, player.y - ball.y)
+    offset = (int(player.x - ball.x), int(player.y - ball.y))
     collision = ball.mask.overlap(player.mask, offset)
     if collision:
         return True
