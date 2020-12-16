@@ -70,37 +70,48 @@ class Game:
             if ball_collision(self.player, ball):
                 self.balls.remove(ball)
 
-        if self.player.move_left_bc_tha_wall:
-            self.player.can_walk_right = False
-            self.player.x -= self.player.vel - 0.4
-        elif self.player.move_right_bc_tha_wall:
-            self.player.x += self.player.vel - 0.4
-            self.player.can_walk_left = False
+        if flower_collision(self.player, self.flower) == 3:
+            self.player.can_not_jump = True
+        elif flower_collision(self.player, self.flower) == 1:
+            self.player.dying = True
 
-        keys = pygame.key.get_pressed()
+        if not self.player.dying:
+            # player movement
 
-        self.gravity()
+            if self.player.move_left_bc_tha_wall:
+                self.player.can_walk_right = False
+                self.player.x -= self.player.vel - 0.4
+            elif self.player.move_right_bc_tha_wall:
+                self.player.x += self.player.vel - 0.4
+                self.player.can_walk_left = False
 
-        if not self.player.falling:
-            self.player_movement(keys)
-            if (self.player.reducing_y and self.player.can_not_jump) or self.player.no_jump_up:
-                self.player.reducing_y = False
-                self.player.jump_count = 4.5
-                self.player.jumping = False
-                self.player.walking = True
+            keys = pygame.key.get_pressed()
+
+            self.gravity()
+
+            if not self.player.falling:
+                self.player_movement(keys)
+                if (self.player.reducing_y and self.player.can_not_jump) or self.player.no_jump_up:
+                    self.player.reducing_y = False
+                    self.player.jump_count = 4.5
+                    self.player.jumping = False
+                    self.player.walking = True
+                else:
+                    self.player_jump(keys)
             else:
-                self.player_jump(keys)
-        else:
-            if keys[pygame.K_LEFT] and self.player.x > 0 and self.player.can_walk_left:
-                self.player.move_left()
-                self.player.blit_standing()
-            elif keys[pygame.K_RIGHT] and self.player.x + self.player.width < win_width and self.player.can_walk_right:
-                self.player.move_right()
-                self.player.blit_standing()
+                if keys[pygame.K_LEFT] and self.player.x > 0 and self.player.can_walk_left:
+                    self.player.move_left()
+                    self.player.blit_standing()
+                elif keys[pygame.K_RIGHT] and self.player.x + self.player.width < win_width and self.player.can_walk_right:
+                    self.player.move_right()
+                    self.player.blit_standing()
 
-        if not self.player.walking or not self.player.jumping:
-            self.player.blit_standing()
-            self.player.walking = False
+            if not self.player.walking or not self.player.jumping:
+                self.player.blit_standing()
+                self.player.walking = False
+
+        elif self.player.dying:
+            self.player.blit_dying()
 
     def blit_and_init(self):
         self.player.can_walk_left = True

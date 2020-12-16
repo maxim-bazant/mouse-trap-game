@@ -76,7 +76,27 @@ def ball_collision(player, ball):
 
 
 def flower_collision(player, flower):
-    pass
+    offset = (int(player.x - flower.x), int(player.y - flower.y))
+    collision = flower.mask.overlap(player.mask, offset)
+
+    if abs((player.y + player.height) - flower.y) < 5:  # above flower
+        if player.facing_right:
+            if collision:
+                return 3  # standing on the flower
+        elif player.facing_left:
+            if collision:
+                return 3
+
+    elif abs((flower.y + flower.height) - player.y - player.height) < 5:  # below flower
+        if player.facing_left:
+            if collision:
+                return 1  # die
+        elif player.facing_right:
+            if collision:
+                return 1  # also die
+
+
+
 
 
 

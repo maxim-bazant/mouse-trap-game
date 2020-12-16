@@ -13,6 +13,10 @@ class Player:
         for number in ["01", "02", "03", "04", "05", "06", "07", "08"]:
             self.left_images.append(pygame.image.load(f"images/mouse/left/{number}.png").convert_alpha())
 
+        """self.dying_images = []
+        for number in ["01", "02", "03", "04", "05", "06", "07", "08"]:
+            self.dying_images.append(pygame.image.load(f"images/mouse/dying/{number}.png").convert_alpha())"""
+
         self.image_changer = 7
 
         self.mask = pygame.mask.from_surface(self.left_images[0])
@@ -24,7 +28,7 @@ class Player:
         self.y = 150
 
         self.vel = 3
-        self.jumping_vel = 3
+        self.jumping_vel = 3.5
 
         self.acc = 5
 
@@ -33,6 +37,9 @@ class Player:
 
         self.walk_count = 0
         self.walking = True
+
+        self.dying_count = 0
+        self.dying = False
 
         self.can_walk_left = True
         self.can_walk_right = True
@@ -108,4 +115,7 @@ class Player:
             elif self.facing_right:
                 win.blit(self.right_images[0], (self.x, self.y))
                 self.mask = pygame.mask.from_surface(self.right_images[0])
+
+    def blit_dying(self):
+        win.blit(self.left_images[0], (self.x, self.y))
 
