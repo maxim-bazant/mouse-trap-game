@@ -1,5 +1,6 @@
 import pygame
 import decimal
+import time
 from settings import *
 
 
@@ -15,7 +16,7 @@ class Player:
 
         self.dying_images = []
         for number in ["01", "02", "01", "02", "01", "02", "01", "02", "01", "02", "01", "02",
-                       "03", "04", "05", "06", "07"]:
+                       "03", "04", "05", "06", "07", "07"]:
             self.dying_images.append(pygame.image.load(f"images/mouse/dying/{number}.png").convert_alpha())
 
         self.image_changer = 7
@@ -118,6 +119,7 @@ class Player:
                 self.mask = pygame.mask.from_surface(self.right_images[0])
 
     def blit_dying(self):
+        self.image_changer = 9
         if self.dying_count + 1 < self.image_changer * len(self.dying_images):
             self.dying_count += 1
         else:
@@ -126,9 +128,11 @@ class Player:
         self.mask = pygame.mask.from_surface(self.dying_images[self.dying_count // self.image_changer])
         win.blit(self.dying_images[self.dying_count // self.image_changer], (self.x, self.y))
 
-        if self.dying_count // self.image_changer == 16:
+        if self.dying_count // self.image_changer == 17:
             self.dying = False
             self.dying_count = 0
             self.x = win_width - self.width - 20
             self.y = 150
+            self.image_changer = 7
 
+            time.sleep(1)
