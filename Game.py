@@ -5,6 +5,7 @@ from Player import Player
 from Platform import Platform
 from Ball import Ball
 from Flower import Flower
+from FallingFloor import FallingFloor
 from settings import *
 
 
@@ -41,6 +42,17 @@ class Game:
         self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
                       Ball(64, self.wall[1].y - 64),
                       Ball(self.wall[1].x, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
+
+        self.falling_floor = [FallingFloor(0, self.wall[0].y + 60), FallingFloor(0 + 64, self.wall[0].y + 60),
+
+                              FallingFloor(0, self.wall[0].y + 150), FallingFloor(0 + 64, self.wall[0].y + 150),
+
+                              FallingFloor(0, self.wall[0].y + 240), FallingFloor(0 + 64, self.wall[0].y + 240),
+                              FallingFloor(0 + 64 + 64, self.wall[0].y + 240),
+
+                              FallingFloor(0, self.wall[1].y), FallingFloor(0 + 64, self.wall[1].y),
+
+                              FallingFloor(0, self.floor[2].y)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -122,6 +134,9 @@ class Game:
 
         for floor in self.floor:
             floor.blit()
+
+        for falling_floor in self.falling_floor:
+            falling_floor.show_me()
 
         for floor in self.floor:
             if floor_collision(self.player, floor):
