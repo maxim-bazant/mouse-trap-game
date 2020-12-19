@@ -76,26 +76,34 @@ def ball_collision(player, ball):
 
 
 def flower_collision(player, flower):
-    offset = (int(player.x - flower.x), int(player.y - flower.y))
-    collision = flower.mask.overlap(player.mask, offset)
-
-    if abs((player.y + player.height) - flower.y) < 5:  # above flower
-        if player.facing_right:
-            if collision:
-                return 3  # standing on the flower
-        elif player.facing_left:
-            if collision:
-                return 3
-
-    elif abs((flower.y + flower.height) - player.y - player.height) < 5:  # below flower
+    if player.y + player.height > flower.y and not player.y > flower.y + flower.height:  # means player is below flower
         if player.facing_left:
-            if collision:
-                return 1  # die
+            if player.x < flower.x + flower.width and player.x + player.width // 2 - space_left > flower.x:
+                return 1
+
+            if flower.x < player.x + player.width < flower.x + flower.width:
+                player.move_left_bc_tha_wall = True
+            else:
+                player.move_left_bc_tha_wall = False
+
+        if player.facing_right:
+            if flower.x < player.x + player.width < flower.x + flower.width:
+                return 1
+
+            if player.x < flower.x + flower.width and player.x + player.width // 2 - space_left > flower.x:
+                player.move_right_bc_tha_wall = True
+            else:
+                player.move_right_bc_tha_wall = False
+
+    elif abs((player.y + player.height) - flower.y) < 5:
+        if player.facing_left:
+            if player.x < flower.x + flower.width and player.x + player.width // 2 > flower.x:
+                player.y += abs((player.y + player.height) - flower.y)
+                return 3
         elif player.facing_right:
-            if collision:
-                return 1  # also die
-
-
+            if flower.x < player.x + player.width // 2 < flower.x + flower.width:
+                player.y += abs((player.y + player.height) - flower.y)
+                return 3
 
 
 

@@ -17,7 +17,7 @@ class Game:
         self.win = win
         self.player = Player()
 
-        self.flower = Flower(win_width // 2 - 75, self.player.y + self.player.height - 60)
+        self.flower = Flower(win_width // 2 - 75, self.player.y + self.player.height - 55)
 
         self.floor = [Platform(pygame.image.load("images/floor/red_floor_5.png"), win_width,
                                self.player.y + self.player.height),
@@ -70,10 +70,10 @@ class Game:
             if ball_collision(self.player, ball):
                 self.balls.remove(ball)
 
-        if flower_collision(self.player, self.flower) == 3:
-            self.player.can_not_jump = True
-        elif flower_collision(self.player, self.flower) == 1:
+        if flower_collision(self.player, self.flower) == 1:
             self.player.dying = True
+        elif flower_collision(self.player, self.flower) == 3:
+            self.player.can_not_jump = True
 
         if not self.player.dying:
             # player movement
