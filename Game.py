@@ -41,18 +41,18 @@ class Game:
 
         self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
                       Ball(64, self.wall[1].y - 64),
-                      Ball(self.wall[1].x, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
+                      Ball(self.wall[1].x + 5, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
 
-        self.falling_floor = [FallingFloor(0, self.wall[0].y + 60), FallingFloor(0 + 64, self.wall[0].y + 60),
+        self.falling_floor = [FallingFloor(0, self.wall[0].y + 60 + 1), FallingFloor(0 + 64, self.wall[0].y + 60 + 1),
 
-                              FallingFloor(0, self.wall[0].y + 150), FallingFloor(0 + 64, self.wall[0].y + 150),
+                              FallingFloor(0, self.wall[0].y + 150 + 1), FallingFloor(0 + 64, self.wall[0].y + 150 + 1),
 
-                              FallingFloor(0, self.wall[0].y + 240), FallingFloor(0 + 64, self.wall[0].y + 240),
-                              FallingFloor(0 + 64 + 64, self.wall[0].y + 240),
+                              FallingFloor(0, self.wall[0].y + 240 + 1), FallingFloor(0 + 64, self.wall[0].y + 240 + 1),
+                              FallingFloor(0 + 64 + 64, self.wall[0].y + 240 + 1),
 
-                              FallingFloor(0, self.wall[1].y), FallingFloor(0 + 64, self.wall[1].y),
+                              FallingFloor(0, self.wall[1].y + 1), FallingFloor(0 + 64, self.wall[1].y + 1),
 
-                              FallingFloor(0, self.floor[2].y)]
+                              FallingFloor(0, self.floor[2].y + 1)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -67,6 +67,14 @@ class Game:
 
     def game(self):
         self.blit_and_init()
+
+        for falling_floor in self.falling_floor:
+            if falling_floor_collision(self.player, falling_floor):
+                self.player.can_not_jump = True
+                if falling_floor.fall_count <= 80:
+                    falling_floor.fall()
+                else:
+                    self.falling_floor.remove(falling_floor)
 
         for wall in self.wall:
             if wall_collision(self.player, wall) == 1:
@@ -93,7 +101,7 @@ class Game:
             if self.player.move_left_bc_tha_wall:
                 self.player.can_walk_right = False
                 self.player.x -= self.player.vel - 0.4
-            elif self.player.move_right_bc_tha_wall:
+            if self.player.move_right_bc_tha_wall:
                 self.player.x += self.player.vel - 0.4
                 self.player.can_walk_left = False
 

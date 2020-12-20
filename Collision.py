@@ -23,6 +23,18 @@ def floor_collision(player, floor):  # can go through vertically but not horizon
                 return False
 
 
+def falling_floor_collision(player, falling_floor):
+    if abs((player.y + player.height) - falling_floor.y) < 5:
+        if player.facing_left:
+            if player.x < falling_floor.x + falling_floor.width and player.x + player.width // 2 > falling_floor.x:
+                player.y += abs((player.y + player.height) - falling_floor.y)
+                return True
+        elif player.facing_right:
+            if falling_floor.x < player.x + player.width // 2 < falling_floor.x + falling_floor.width:
+                player.y += abs((player.y + player.height) - falling_floor.y)
+                return True
+
+
 def wall_collision(player, wall):  # can not go vertically or horizontally
     if player.y + player.height > wall.y and not player.y > wall.y + wall.height:
         if player.facing_left:
@@ -84,7 +96,8 @@ def flower_collision(player, flower):
             if flower.x < player.x + player.width < flower.x + flower.width:
                 player.move_left_bc_tha_wall = True
             else:
-                player.move_left_bc_tha_wall = False
+                if not player.move_left_bc_tha_wall:
+                    player.move_left_bc_tha_wall = False
 
         if player.facing_right:
             if flower.x < player.x + player.width < flower.x + flower.width:
@@ -93,7 +106,8 @@ def flower_collision(player, flower):
             if player.x < flower.x + flower.width and player.x + player.width // 2 - space_left > flower.x:
                 player.move_right_bc_tha_wall = True
             else:
-                player.move_right_bc_tha_wall = False
+                if not player.move_right_bc_tha_wall:
+                    player.move_right_bc_tha_wall = False
 
     elif abs((player.y + player.height) - flower.y) < 5:
         if player.facing_left:

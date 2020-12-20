@@ -32,7 +32,7 @@ class Player:
         self.vel = 3
         self.jumping_vel = 3.5
 
-        self.acc = 5
+        self.acc = 2.5
 
         self.facing_right = False
         self.facing_left = True
