@@ -43,16 +43,16 @@ class Game:
                       Ball(64, self.wall[1].y - 64),
                       Ball(self.wall[1].x + 5, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
 
-        self.falling_floor = [FallingFloor(0, self.wall[0].y + 60 + 1), FallingFloor(0 + 64, self.wall[0].y + 60 + 1),
+        self.falling_floor = [FallingFloor(0, self.wall[0].y + 60 + 2), FallingFloor(0 + 64, self.wall[0].y + 60 + 2),
 
-                              FallingFloor(0, self.wall[0].y + 150 + 1), FallingFloor(0 + 64, self.wall[0].y + 150 + 1),
+                              FallingFloor(0, self.wall[0].y + 150 + 2), FallingFloor(0 + 64, self.wall[0].y + 150 + 2),
 
-                              FallingFloor(0, self.wall[0].y + 240 + 1), FallingFloor(0 + 64, self.wall[0].y + 240 + 1),
-                              FallingFloor(0 + 64 + 64, self.wall[0].y + 240 + 1),
+                              FallingFloor(0, self.wall[0].y + 240 + 2), FallingFloor(0 + 64, self.wall[0].y + 240 + 2),
+                              FallingFloor(0 + 64 + 64, self.wall[0].y + 240 + 2),
 
-                              FallingFloor(0, self.wall[1].y + 1), FallingFloor(0 + 64, self.wall[1].y + 1),
+                              FallingFloor(0, self.wall[1].y + 5), FallingFloor(0 + 64, self.wall[1].y + 5),
 
-                              FallingFloor(0, self.floor[2].y + 1)]
+                              FallingFloor(0, self.floor[2].y + 2)]
 
     def handle_events(self):
         for event in pygame.event.get():
