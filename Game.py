@@ -52,7 +52,7 @@ class Game:
 
                               FallingFloor(0, self.wall[1].y + 5), FallingFloor(0 + 64, self.wall[1].y + 5),
 
-                              FallingFloor(0, self.floor[2].y + 2)]
+                              FallingFloor(0, self.floor[2].y + 5)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -71,10 +71,19 @@ class Game:
         for falling_floor in self.falling_floor:
             if falling_floor_collision(self.player, falling_floor):
                 self.player.can_not_jump = True
-                if falling_floor.fall_count <= 80:
+                if falling_floor.fall_count <= 70:
                     falling_floor.fall()
                 else:
                     self.falling_floor.remove(falling_floor)
+
+        for floor in self.floor:
+            if floor == self.floor[1]:
+                number = 10
+            else:
+                number = 5
+
+            if floor_collision(self.player, floor, number):
+                self.player.can_not_jump = True
 
         for wall in self.wall:
             if wall_collision(self.player, wall) == 1:
@@ -145,10 +154,6 @@ class Game:
 
         for falling_floor in self.falling_floor:
             falling_floor.show_me()
-
-        for floor in self.floor:
-            if floor_collision(self.player, floor):
-                self.player.can_not_jump = True
 
         for wall in self.wall:
             wall.blit()
