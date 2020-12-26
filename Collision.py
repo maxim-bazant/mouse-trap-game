@@ -120,7 +120,11 @@ def flower_collision(player, flower):
                 return 3
 
 
-
+def piston_collision(player, piston):
+    offset = (int(player.x - piston.x), int(player.y - piston.y))
+    collision = piston.mask.overlap(player.mask, offset)
+    if collision:
+        return True
 
 
 

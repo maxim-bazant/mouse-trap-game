@@ -119,7 +119,6 @@ class Player:
                 self.mask = pygame.mask.from_surface(self.right_images[0])
 
     def blit_dying(self):
-        self.y = 150
         self.image_changer = 9
         if self.dying_count + 1 < self.image_changer * len(self.dying_images):
             self.dying_count += 1
