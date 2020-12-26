@@ -55,6 +55,11 @@ class Game:
 
                               FallingFloor(0, self.floor[2].y + 5)]
 
+        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height),
+                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height),
+                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height),
+                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height)]
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -161,6 +166,9 @@ class Game:
 
         for ball in self.balls:
             ball.show_and_move()
+
+        for piston in self.pistons:
+            piston.show_and_move()
 
         self.flower.show_me()
 
