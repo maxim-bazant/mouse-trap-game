@@ -42,6 +42,7 @@ class Player:
 
         self.dying_count = 0
         self.dying = False
+        self.done_dying = True
 
         self.can_walk_left = True
         self.can_walk_right = True
@@ -119,6 +120,7 @@ class Player:
                 self.mask = pygame.mask.from_surface(self.right_images[0])
 
     def blit_dying(self):
+        self.done_dying = False
         self.image_changer = 9
         if self.dying_count + 1 < self.image_changer * len(self.dying_images):
             self.dying_count += 1
@@ -138,5 +140,6 @@ class Player:
             self.image_changer = 7
             self.jumping = False
             self.jump_count = 4.5
+            self.done_dying = True
 
             time.sleep(1)

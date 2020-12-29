@@ -26,23 +26,24 @@ class Piston(object):
         self.tail = [Tail(self.x + self.width // 2 - 12, self.y)]
         self.mask = pygame.mask.from_surface(self.image)
 
-    def show_and_move(self):
+    def show_and_move(self, player):
         neg = 1
-        if self.move_count >= self.mc_default // 2:
-            neg = -1
-        elif self.move_count <= self.mc_default // 2:
-            neg = 1
-        if self.move_count == 0:
-            self.move_count = self.mc_default
+        if not player.dying:
+            if self.move_count >= self.mc_default // 2:
+                neg = -1
+            elif self.move_count <= self.mc_default // 2:
+                neg = 1
+            if self.move_count == 0:
+                self.move_count = self.mc_default
 
-        self.move_and_show_tail(neg)
+            self.move_count -= 1
+            self.y -= self.vel * neg
 
-        self.move_count -= 1
-        self.y -= self.vel * neg
+        self.show_tail(neg)
 
         win.blit(self.image, (self.x, self.y))
 
-    def move_and_show_tail(self, neg):
+    def show_tail(self, neg):
         for tail in self.tail:
             tail.show_tail()
 

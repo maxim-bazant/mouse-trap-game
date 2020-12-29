@@ -105,6 +105,10 @@ class Game:
             if ball_collision(self.player, ball):
                 self.balls.remove(ball)
 
+        for piston in self.pistons:
+            if piston_collision(self.player, piston):
+                self.player.dying = True
+
         if flower_collision(self.player, self.flower) == 1:
             self.player.dying = True
         elif flower_collision(self.player, self.flower) == 3:
@@ -147,6 +151,14 @@ class Game:
 
         elif self.player.dying:
             self.player.blit_dying()
+            if self.player.done_dying:
+                self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
+                              Ball(64, self.wall[1].y - 64),
+                              Ball(self.wall[1].x + 5, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
+                self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height),
+                                Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height),
+                                Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height),
+                                Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height)]
 
     def blit_and_init(self):
         self.player.can_walk_left = True
@@ -168,7 +180,7 @@ class Game:
             ball.show_and_move()
 
         for piston in self.pistons:
-            piston.show_and_move()
+            piston.show_and_move(self.player)
 
         self.flower.show_me()
 
