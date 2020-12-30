@@ -55,10 +55,10 @@ class Game:
 
                               FallingFloor(0, self.floor[2].y + 5)]
 
-        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height),
-                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height),
-                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height),
-                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height)]
+        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height + 180),
+                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height + 120),
+                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height + 60),
+                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height + 0)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -152,13 +152,30 @@ class Game:
         elif self.player.dying:
             self.player.blit_dying()
             if self.player.done_dying:
-                self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
-                              Ball(64, self.wall[1].y - 64),
-                              Ball(self.wall[1].x + 5, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
-                self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height),
-                                Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height),
-                                Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height),
-                                Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height)]
+                self.after_death_setup()
+
+    def after_death_setup(self):
+        self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
+                      Ball(64, self.wall[1].y - 64),
+                      Ball(self.wall[1].x + 5, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
+        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height + 180),
+                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height + 120),
+                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height + 60),
+                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height + 0)]
+
+        self.falling_floor = [FallingFloor(0, self.wall[0].y + 60 + 2),
+                              FallingFloor(0 + 64, self.wall[0].y + 60 + 2),
+
+                              FallingFloor(0, self.wall[0].y + 150 + 2),
+                              FallingFloor(0 + 64, self.wall[0].y + 150 + 2),
+
+                              FallingFloor(0, self.wall[0].y + 240 + 2),
+                              FallingFloor(0 + 64, self.wall[0].y + 240 + 2),
+                              FallingFloor(0 + 64 + 64, self.wall[0].y + 240 + 2),
+
+                              FallingFloor(0, self.wall[1].y + 5), FallingFloor(0 + 64, self.wall[1].y + 5),
+
+                              FallingFloor(0, self.floor[2].y + 5)]
 
     def blit_and_init(self):
         self.player.can_walk_left = True
