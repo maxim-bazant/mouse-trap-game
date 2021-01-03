@@ -142,4 +142,4 @@ class Player:
             self.jump_count = 4.5
             self.done_dying = True
 
-            time.sleep(1)
+            time.sleep(0.25)

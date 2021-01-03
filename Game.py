@@ -7,6 +7,7 @@ from Ball import Ball
 from Flower import Flower
 from FallingFloor import FallingFloor
 from Piston import Piston
+from Door import Door
 from settings import *
 
 
@@ -59,6 +60,9 @@ class Game:
                         Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height + 120),
                         Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height + 60),
                         Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height + 0)]
+
+        self.closed_door = Door(800, 500, pygame.image.load("images/door.png"))
+        self.open_door = Door(800, 500, pygame.image.load("images/open_door.png"))
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -200,6 +204,11 @@ class Game:
 
         for piston in self.pistons:
             piston.show_and_move(self.player)
+
+        if len(self.balls) != 0:
+            self.closed_door.show_me()
+        else:
+            self.open_door.show_me()
 
         self.flower.show_me()
 
