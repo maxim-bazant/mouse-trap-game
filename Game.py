@@ -8,6 +8,7 @@ from Flower import Flower
 from FallingFloor import FallingFloor
 from Piston import Piston
 from Door import Door
+from Ladder import Ladder
 from settings import *
 
 
@@ -77,45 +78,7 @@ class Game:
     def game(self):
         self.blit_and_init()
 
-        for falling_floor in self.falling_floor:
-            if falling_floor_collision(self.player, falling_floor):
-                self.player.can_not_jump = True
-                if falling_floor.fall_count <= 70:
-                    falling_floor.fall()
-                else:
-                    self.falling_floor.remove(falling_floor)
-
-        for floor in self.floor:
-            if floor == self.floor[1]:
-                number = 10
-            else:
-                number = 5
-
-            if floor_collision(self.player, floor, number):
-                self.player.can_not_jump = True
-
-        for wall in self.wall:
-            if wall_collision(self.player, wall) == 1:
-                self.player.can_walk_left = False
-            elif wall_collision(self.player, wall) == 2:
-                self.player.can_walk_right = False
-            elif wall_collision(self.player, wall) == 3:
-                self.player.can_not_jump = True
-            elif wall_collision(self.player, wall) == 4:
-                self.player.no_jump_up = True
-
-        for ball in self.balls:
-            if ball_collision(self.player, ball):
-                self.balls.remove(ball)
-
-        for piston in self.pistons:
-            if piston_collision(self.player, piston):
-                self.player.dying = True
-
-        if flower_collision(self.player, self.flower) == 1:
-            self.player.dying = True
-        elif flower_collision(self.player, self.flower) == 3:
-            self.player.can_not_jump = True
+        self.collision()
 
         if not self.player.dying:
             # player movement
@@ -182,6 +145,47 @@ class Game:
 
                               FallingFloor(0, self.floor[2].y + 5)]
 
+    def collision(self):
+        for falling_floor in self.falling_floor:
+            if falling_floor_collision(self.player, falling_floor):
+                self.player.can_not_jump = True
+                if falling_floor.fall_count <= 70:
+                    falling_floor.fall()
+                else:
+                    self.falling_floor.remove(falling_floor)
+
+        for floor in self.floor:
+            if floor == self.floor[1]:
+                number = 10
+            else:
+                number = 5
+
+            if floor_collision(self.player, floor, number):
+                self.player.can_not_jump = True
+
+        for wall in self.wall:
+            if wall_collision(self.player, wall) == 1:
+                self.player.can_walk_left = False
+            elif wall_collision(self.player, wall) == 2:
+                self.player.can_walk_right = False
+            elif wall_collision(self.player, wall) == 3:
+                self.player.can_not_jump = True
+            elif wall_collision(self.player, wall) == 4:
+                self.player.no_jump_up = True
+
+        for ball in self.balls:
+            if ball_collision(self.player, ball):
+                self.balls.remove(ball)
+
+        for piston in self.pistons:
+            if piston_collision(self.player, piston):
+                self.player.dying = True
+
+        if flower_collision(self.player, self.flower) == 1:
+            self.player.dying = True
+        elif flower_collision(self.player, self.flower) == 3:
+            self.player.can_not_jump = True
+
     def blit_and_init(self):
         self.player.can_walk_left = True
         self.player.can_walk_right = True
@@ -190,13 +194,13 @@ class Game:
         self.handle_events()
 
         for floor in self.floor:
-            floor.blit()
+            floor.show_me()
 
         for falling_floor in self.falling_floor:
             falling_floor.show_me()
 
         for wall in self.wall:
-            wall.blit()
+            wall.show_me()
 
         for ball in self.balls:
             ball.show_and_move()
