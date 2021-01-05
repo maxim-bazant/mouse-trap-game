@@ -32,7 +32,8 @@ def falling_floor_collision(player, falling_floor):
             else:
                 return False
         elif player.facing_right:
-            if falling_floor.x < player.x + player.width // 2 < falling_floor.x + falling_floor.width:
+            if player.x + player.width > falling_floor.x and \
+                    player.x + player.width // 2 < falling_floor.x + falling_floor.width:
                 player.y += abs((player.y + player.height) - falling_floor.y)
                 return True
             else:
@@ -42,13 +43,13 @@ def falling_floor_collision(player, falling_floor):
 def ladder_collision(player, ladder):
     if abs((player.y + player.height) - ladder.y) < 5:
         if player.facing_left:
-            if player.x < ladder.x + ladder.width and player.x + player.width // 2 > ladder.x:
+            if player.x < ladder.x + ladder.width and player.x + player.width // 2 + space_right > ladder.x:
                 player.y += abs((player.y + player.height) - ladder.y)
                 return True
             else:
                 return False
         elif player.facing_right:
-            if ladder.x < player.x + player.width < ladder.x + ladder.width:
+            if player.x + player.width > ladder.x and player.x + player.width // 2 < ladder.x + ladder.width:
                 player.y += abs((player.y + player.height) - ladder.y)
                 return True
             else:
