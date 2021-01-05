@@ -3,7 +3,7 @@ from Player import *
 from Platform import *
 from settings import *
 
-space_right = 10
+space_right = 5
 space_left = 5
 
 
