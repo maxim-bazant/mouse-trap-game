@@ -5,7 +5,7 @@ class Ball(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = pygame.image.load("images/ball.png")
+        self.image = pygame.image.load("images/ball.png").convert_alpha()
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
         self.mask = pygame.mask.from_surface(self.image)

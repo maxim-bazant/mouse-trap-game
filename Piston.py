@@ -5,7 +5,7 @@ class Tail(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = pygame.image.load("images/piston_tail.png")
+        self.image = pygame.image.load("images/piston_tail.png").convert_alpha()
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
 
@@ -18,7 +18,7 @@ class Piston(object):
         self.x = x
         self.y = y
         self.starting_y = 311.5
-        self.image = pygame.image.load("images/piston.png")
+        self.image = pygame.image.load("images/piston.png").convert_alpha()
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
         self.vel = 1.5

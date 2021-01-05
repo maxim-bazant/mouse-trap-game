@@ -1,6 +1,6 @@
 import pygame
 
-win_width = 1020  # is supposed to be 1024
+win_width = 1021
 win_height = 780
 side_width = 0
 FPS = 100

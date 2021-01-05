@@ -5,7 +5,7 @@ class Flower(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = pygame.image.load("images/flower.png")
+        self.image = pygame.image.load("images/flower.png").convert_alpha()
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
         self.mask = pygame.mask.from_surface(self.image)
