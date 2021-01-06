@@ -82,6 +82,8 @@ class Game:
         self.floor.append(Platform(pygame.image.load("images/floor/red_floor_3.png"),
                                    self.door.x + 64 * 2 - 5, self.door.y + self.door.height))
 
+        self.ready = False
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -111,6 +113,9 @@ class Game:
                 self.player.can_walk_right = False
 
             keys = pygame.key.get_pressed()
+
+            if keys[pygame.K_r]:
+                self.ready = True
 
             self.gravity()
 
@@ -233,19 +238,19 @@ class Game:
             ladder_.show_me()
 
         for piston in self.pistons:
-            piston.show_and_move(self.player)
+            piston.show_and_move(self.player, self.ready)
 
         self.door.show_me(self.balls)
 
         self.flower.show_me()
 
     def player_movement(self, keys):
-        if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping:
+        if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping and self.ready:
             if self.player.can_walk_left and self.player.x > 0 and self.player.can_walk_left:
                 self.player.move_left()
             self.player.walking = True
             self.player.blit_moving_left()
-        if keys[pygame.K_RIGHT] and not self.player.walking and not self.player.jumping:
+        if keys[pygame.K_RIGHT] and not self.player.walking and not self.player.jumping and self.ready:
             if self.player.can_walk_right and self.player.x + self.player.width < win_width:
                 self.player.move_right()
             self.player.walking = True
@@ -254,7 +259,7 @@ class Game:
             self.player.blit_standing()
 
     def player_jump(self, keys):
-        if keys[pygame.K_SPACE] or self.player.jumping:
+        if keys[pygame.K_SPACE] or self.player.jumping and self.ready:
             if self.player.walking:
                 if self.player.facing_left:
                     self.player.jump()
