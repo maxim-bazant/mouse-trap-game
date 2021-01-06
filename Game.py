@@ -250,6 +250,8 @@ class Game:
                 self.player.move_right()
             self.player.walking = True
             self.player.blit_moving_right()
+        else:
+            self.player.blit_standing()
 
     def player_jump(self, keys):
         if keys[pygame.K_SPACE] or self.player.jumping:
