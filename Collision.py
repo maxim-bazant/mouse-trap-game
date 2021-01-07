@@ -32,7 +32,7 @@ def falling_floor_collision(player, falling_floor):
             else:
                 return False
         elif player.facing_right:
-            if player.x + player.width > falling_floor.x and \
+            if player.x + player.width - space_right > falling_floor.x and \
                     player.x + player.width // 2 < falling_floor.x + falling_floor.width:
                 player.y += abs((player.y + player.height) - falling_floor.y)
                 return True
@@ -85,8 +85,8 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
                 return 3
 
         if player.facing_right:
-            if player.x + player.width - space_right > wall.x - wall.width and \
-               player.x - player.width // 2 - space_right < wall.x - wall.width * 2:
+            if player.x + player.width - space_right * 2 > wall.x - wall.width and \
+               player.x - player.width // 2 + space_right < wall.x - wall.width * 2:
                 player.y += abs((player.y + player.height) - wall.y)
                 return 3
 

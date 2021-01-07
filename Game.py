@@ -57,10 +57,10 @@ class Game:
 
                               FallingFloor(0, self.floor[2].y + 5)]
 
-        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height + 180),
-                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height + 120),
-                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height + 60),
-                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height + 0)]
+        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height + 180, 9),
+                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height + 120, 7),
+                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height + 60, 4),
+                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height + 0, 1)]
 
         self.ladder = [Ladder(self.wall[2].x + self.wall[2].width, self.floor[7].y - 64),
                        Ladder(self.wall[2].x + self.wall[2].width, self.floor[7].y - 64 * 2),
@@ -81,8 +81,6 @@ class Game:
         # floor under door
         self.floor.append(Platform(pygame.image.load("images/floor/red_floor_3.png"),
                                    self.door.x + 64 * 2 - 5, self.door.y + self.door.height))
-
-        self.ready = False
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -113,9 +111,6 @@ class Game:
                 self.player.can_walk_right = False
 
             keys = pygame.key.get_pressed()
-
-            if keys[pygame.K_r]:
-                self.ready = True
 
             self.gravity()
 
@@ -149,10 +144,10 @@ class Game:
         self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
                       Ball(64, self.wall[1].y - 64),
                       Ball(self.wall[1].x + 5, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
-        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height + 180),
-                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height + 120),
-                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height + 60),
-                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height + 0)]
+        self.pistons = [Piston(self.floor[1].x - self.floor[1].width, self.floor[1].y + self.floor[1].height + 180, 9),
+                        Piston(self.floor[1].x - self.floor[1].width + 125, self.floor[1].y + self.floor[1].height + 120, 7),
+                        Piston(self.floor[1].x - self.floor[1].width + 250, self.floor[1].y + self.floor[1].height + 60, 4),
+                        Piston(self.floor[1].x - self.floor[1].width + 375, self.floor[1].y + self.floor[1].height + 0, 1)]
 
         self.falling_floor = [FallingFloor(0, self.wall[0].y + 60 + 2),
                               FallingFloor(0 + 64, self.wall[0].y + 60 + 2),
@@ -238,19 +233,19 @@ class Game:
             ladder_.show_me()
 
         for piston in self.pistons:
-            piston.show_and_move(self.player, self.ready)
+            piston.show_and_move(self.player)
 
         self.door.show_me(self.balls)
 
         self.flower.show_me()
 
     def player_movement(self, keys):
-        if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping and self.ready:
+        if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping:
             if self.player.can_walk_left and self.player.x > 0 and self.player.can_walk_left:
                 self.player.move_left()
             self.player.walking = True
             self.player.blit_moving_left()
-        if keys[pygame.K_RIGHT] and not self.player.walking and not self.player.jumping and self.ready:
+        if keys[pygame.K_RIGHT] and not self.player.walking and not self.player.jumping:
             if self.player.can_walk_right and self.player.x + self.player.width < win_width:
                 self.player.move_right()
             self.player.walking = True
@@ -259,7 +254,7 @@ class Game:
             self.player.blit_standing()
 
     def player_jump(self, keys):
-        if keys[pygame.K_SPACE] or self.player.jumping and self.ready:
+        if keys[pygame.K_SPACE] or self.player.jumping:
             if self.player.walking:
                 if self.player.facing_left:
                     self.player.jump()
