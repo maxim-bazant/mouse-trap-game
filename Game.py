@@ -76,11 +76,11 @@ class Game:
         self.floor.append(Platform(pygame.image.load("images/floor/red_floor_1.png"),
                                    self.ladder[-1].x + self.ladder[-1].width - 5, self.ladder[-1].y + 64))
 
-        self.door = Door(self.wall[2].x + self.wall[2].width, self.ladder[-1].y - 64 - 32)
+        self.door = Door(self.wall[2].x + self.wall[2].width, self.ladder[-1].y - 64 - 48 - 5)
 
         # floor under door
         self.floor.append(Platform(pygame.image.load("images/floor/red_floor_3.png"),
-                                   self.door.x + 64 * 2 - 5, self.door.y + self.door.height))
+                                   self.door.x + 64 * 2 - 5, self.door.y + self.door.height - 16))
 
     def handle_events(self):
         for event in pygame.event.get():
