@@ -70,10 +70,11 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
 
         if player.facing_right:
             if player.x + player.width // 2 - space_right > wall.x - wall.width * 2 and\
-               player.x + player.width // 2 + space_right < wall.x:
+               player.x + player.width // 2 - space_right * 2 < wall.x:
                 return 2  # 1 for not able to walk right
 
-            if player.x < wall.x < player.x + player.width // 2 + space_right:
+            print(player.x)
+            if player.x < wall.x < player.x + player.width // 2 + space_right or 715 < player.x < 755.5:
                 player.move_right_bc_tha_wall = True
             else:
                 player.move_right_bc_tha_wall = False
@@ -86,7 +87,7 @@ def wall_collision(player, wall):  # can not go vertically or horizontally
 
         if player.facing_right:
             if player.x + player.width - space_right * 2 > wall.x - wall.width and \
-               player.x - player.width // 2 + space_right < wall.x - wall.width * 2:
+               player.x - player.width // 2 - space_right * 4 < wall.x - wall.width * 2:
                 player.y += abs((player.y + player.height) - wall.y)
                 return 3
 
