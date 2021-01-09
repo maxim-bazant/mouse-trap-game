@@ -133,6 +133,8 @@ class Player:
         win.blit(self.dying_images[self.dying_count // self.image_changer], (self.x, self.y))
 
         if self.dying_count // self.image_changer == 17:
+            self.move_left_bc_tha_wall = False
+            self.move_right_bc_tha_wall = False
             self.facing_right = False
             self.facing_left = True
             self.dying = False
