@@ -149,6 +149,13 @@ def piston_collision(player, piston):
         return True
 
 
+def door_collision(player, door):
+    offset = (int(player.x - door.x), int(player.y - door.y))
+    collision = door.mask.overlap(player.mask, offset)
+    if collision:
+        return True
+
+
 
 
 

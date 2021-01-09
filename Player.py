@@ -44,6 +44,8 @@ class Player:
         self.dying = False
         self.done_dying = True
 
+        self.going_into_door = False
+
         self.can_walk_left = True
         self.can_walk_right = True
 
@@ -143,3 +145,13 @@ class Player:
             self.done_dying = True
 
             time.sleep(0.25)
+
+    def after_going_to_door_reset(self):
+        self.going_into_door = False
+        self.facing_right = False
+        self.facing_left = True
+        self.x = win_width - self.width - 20
+        self.y = 150
+        self.jumping = False
+        self.jump_count = 4.5
+

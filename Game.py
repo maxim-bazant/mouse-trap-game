@@ -90,15 +90,19 @@ class Game:
     def start_screen(self):
         pass
 
-    def game_over_screen(self):
-        pass
+    def level_done_screen(self):
+        win.fill(bg_color)
+        self.clock.tick(FPS)
+        pygame.display.update()
+
+        time.sleep(1.5)
 
     def game(self):
         self.blit_and_init()
 
         self.collision()
 
-        if not self.player.dying:
+        if not self.player.dying and not self.player.going_into_door:
             # player movement
 
             if self.player.move_left_bc_tha_wall:
@@ -138,9 +142,19 @@ class Game:
         elif self.player.dying:
             self.player.blit_dying()
             if self.player.done_dying:
-                self.after_death_setup()
+                self.reset_setup()
 
-    def after_death_setup(self):
+        elif self.player.going_into_door:
+            self.door.mouse_going_into_door()
+            if self.door.mouse_done_going_into_door:
+
+                self.level_done_screen()
+
+                self.reset_setup()
+                self.player.after_going_to_door_reset()
+                self.door.mouse_done_going_into_door = False
+
+    def reset_setup(self):
         self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
                       Ball(64, self.wall[1].y - 64),
                       Ball(self.wall[1].x + 5, self.floor[6].y), Ball(win_width - 64, self.floor[5].y - 64)]
@@ -210,6 +224,10 @@ class Game:
         elif flower_collision(self.player, self.flower) == 3:
             self.player.can_not_jump = True
 
+        if self.door.open:
+            if door_collision(self.player, self.door):
+                self.player.going_into_door = True
+
     def blit_and_init(self):
         self.player.can_walk_left = True
         self.player.can_walk_right = True
@@ -235,7 +253,8 @@ class Game:
         for piston in self.pistons:
             piston.show_and_move(self.player)
 
-        self.door.show_me(self.balls)
+        if not self.player.going_into_door:
+            self.door.show_me(self.balls)
 
         self.flower.show_me()
 
@@ -281,9 +300,7 @@ class Game:
             self.player.y = win_height - 160
 
     def run(self):
-        self.start_screen()
         self.game()
-        self.game_over_screen()
 
 
 g = Game()
