@@ -82,6 +82,8 @@ class Game:
         self.floor.append(Platform(pygame.image.load("images/floor/red_floor_3.png"),
                                    self.door.x + 64 * 2 - 5, self.door.y + self.door.height - 16))
 
+        self.congrats = pygame.image.load("images/text/congrats.png")
+
     def handle_events(self):
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -92,10 +94,11 @@ class Game:
 
     def level_done_screen(self):
         win.fill(bg_color)
+        win.blit(self.congrats, (30, win_height // 2 - 50))
         self.clock.tick(FPS)
         pygame.display.update()
 
-        time.sleep(1.5)
+        time.sleep(2)
 
     def game(self):
         self.blit_and_init()
