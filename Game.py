@@ -14,6 +14,7 @@ from settings import *
 
 class Game:
     def __init__(self):
+        self.score = 0
         self.running = True
         self.clock = pygame.time.Clock()
         self.win_width = win_width
@@ -158,6 +159,7 @@ class Game:
                 self.reset_setup()
                 self.player.after_going_to_door_reset()
                 self.door.mouse_done_going_into_door = False
+                self.score = 0
 
     def reset_setup(self):
         self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
@@ -218,6 +220,7 @@ class Game:
 
         for ball in self.balls:
             if ball_collision(self.player, ball):
+                self.score += 40
                 self.balls.remove(ball)
 
         for piston in self.pistons:
