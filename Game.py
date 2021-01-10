@@ -9,12 +9,14 @@ from FallingFloor import FallingFloor
 from Piston import Piston
 from Door import Door
 from Ladder import Ladder
+from ScoreNumbers import ScoreNumbers
 from settings import *
 
 
 class Game:
     def __init__(self):
         self.score = 0
+        self.score_count = -1
         self.running = True
         self.clock = pygame.time.Clock()
         self.win_width = win_width
@@ -86,6 +88,14 @@ class Game:
                                    self.door.x + 64 * 2 - 5, self.door.y + self.door.height - 16))
 
         self.congrats = pygame.image.load("images/text/congrats.png")
+
+        self.score_numbers = [ScoreNumbers(self.wall[2].x - 128, win_height - 64),
+                              ScoreNumbers(self.wall[2].x - 192, win_height - 64),
+                              ScoreNumbers(self.wall[2].x - 256, win_height - 64),
+                              ScoreNumbers(self.wall[2].x - 320, win_height - 64),
+                              ScoreNumbers(self.wall[2].x - 384, win_height - 64),
+                              ScoreNumbers(self.wall[2].x - 448, win_height - 64)]
+        # next score instance above the current one in this list
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -262,6 +272,20 @@ class Game:
 
         for piston in self.pistons:
             piston.show_and_move(self.player)
+
+        for score_ in self.score_numbers:
+            if self.score_count < len(self.score_numbers) - 1:
+                self.score_count += 1
+            else:
+                self.score_count = 0
+
+            score_list = list(str(self.score))
+            score_list.reverse()
+
+            try:
+                score_.show_me(int(score_list[self.score_count]))
+            except IndexError:
+                score_.show_me(0)
 
         if not self.player.going_into_door:
             self.door.show_me(self.balls)
