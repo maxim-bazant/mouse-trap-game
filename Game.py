@@ -10,6 +10,7 @@ from Piston import Piston
 from Door import Door
 from Ladder import Ladder
 from ScoreNumbers import ScoreNumbers
+from FloatingText import FloatingText
 from settings import *
 
 
@@ -95,7 +96,9 @@ class Game:
                               ScoreNumbers(self.wall[2].x - 320, win_height - 64),
                               ScoreNumbers(self.wall[2].x - 384, win_height - 64),
                               ScoreNumbers(self.wall[2].x - 448, win_height - 64)]
-        # next score instance above the current one in this list
+
+        self.mouse_trap_text = [FloatingText(750, 200, False, 15, True),
+                                FloatingText(150, 500, True, 15, True)]
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -252,6 +255,9 @@ class Game:
         self.player.can_not_jump = False
         self.player.no_jump_up = False
         self.handle_events()
+
+        for mouse_trap_text in self.mouse_trap_text:
+            mouse_trap_text.show_and_move()
 
         win.blit(self.ceiling, (0, -4))
 
