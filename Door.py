@@ -12,7 +12,7 @@ class Door(object):
 
         self.animation = []
         for number in ["01", "02", "03", "04", "closed_door"]:
-            self.animation.append(pygame.image.load(f"images/door/{number}.png"))
+            self.animation.append(pygame.image.load(f"images/door/{number}.png").convert_alpha())
 
         self.width = self.closed_door.get_rect().width
         self.height = self.closed_door.get_rect().height
