@@ -32,6 +32,8 @@ class Player:
         self.vel = 3
         self.jumping_vel = 3.5
 
+        self.lives = 4
+
         self.acc = 3
 
         self.facing_right = False
@@ -145,6 +147,7 @@ class Player:
             self.jumping = False
             self.jump_count = 4.5
             self.done_dying = True
+            self.lives -= 1
 
             time.sleep(0.25)
 
@@ -156,4 +159,5 @@ class Player:
         self.y = 150
         self.jumping = False
         self.jump_count = 4.5
+        self.lives = 4
 
