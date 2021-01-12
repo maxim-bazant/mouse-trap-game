@@ -189,6 +189,7 @@ class Game:
                 self.score = 0
 
         elif self.player.lives == 0:
+            self.score = 0
             self.game_over_screen()
 
             self.reset_setup()
