@@ -32,7 +32,7 @@ class Player:
         self.vel = 3
         self.jumping_vel = 3.5
 
-        self.lives = 4
+        self.lives = 1
 
         self.acc = 3
 
@@ -151,7 +151,7 @@ class Player:
 
             time.sleep(0.25)
 
-    def after_going_to_door_reset(self):
+    def reset(self):
         self.going_into_door = False
         self.facing_right = False
         self.facing_left = True

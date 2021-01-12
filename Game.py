@@ -90,6 +90,7 @@ class Game:
                                    self.door.x + 64 * 2 - 5, self.door.y + self.door.height - 16))
 
         self.congrats = pygame.image.load("images/text/congrats.png")
+        self.you_lost = pygame.image.load("images/text/you_lost.png")
 
         self.score_numbers = [ScoreNumbers(self.wall[2].x - 128, win_height - 64),
                               ScoreNumbers(self.wall[2].x - 192, win_height - 64),
@@ -102,7 +103,7 @@ class Game:
                                 FloatingText(150, 500, True, 15, True),
                                 FloatingText(win_width + 20, 20, False, 5, False)]
 
-        self.lifes_images = [Life(win_width + 20, 130),
+        self.lives_images = [Life(win_width + 20, 130),
                              Life(win_width + 20, 230),
                              Life(win_width + 20, 320),
                              Life(win_width + 20, 410)]
@@ -114,7 +115,7 @@ class Game:
 
     def level_done_screen(self):
         win.fill(bg_color)
-        win.blit(self.congrats, (30, win_height // 2 - 50))
+        win.blit(self.congrats, (30 + side_width // 2, win_height // 2 - 50))
         self.clock.tick(FPS)
         pygame.display.update()
 
@@ -122,7 +123,7 @@ class Game:
 
     def game_over_screen(self):
         win.fill(bg_color)
-        # blit game over text
+        win.blit(self.you_lost, (30 + side_width // 2, win_height // 2 - 50))
         self.clock.tick(FPS)
         pygame.display.update()
 
@@ -182,12 +183,15 @@ class Game:
                 self.level_done_screen()
 
                 self.reset_setup()
-                self.player.after_going_to_door_reset()
+                self.player.reset()
                 self.door.mouse_done_going_into_door = False
                 self.score = 0
 
         elif self.player.lives == 0:
-            pass
+            self.game_over_screen()
+
+            self.reset_setup()
+            self.player.reset()
 
     def reset_setup(self):
         self.balls = [Ball(win_width // 2 - 75, 50), Ball(0, self.wall[0].y + self.wall[0].y // 2 - 15),
@@ -274,8 +278,8 @@ class Game:
         for mouse_trap_text in self.mouse_trap_text:
             mouse_trap_text.show_and_move()
 
-        for life in self.lifes_images:
-            life.show_me()
+        for life in range(self.player.lives):
+            self.lives_images[life].show_me()
 
         win.blit(self.ceiling, (0, -4))
 
