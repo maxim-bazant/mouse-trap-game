@@ -32,7 +32,7 @@ class Player:
         self.vel = 3
         self.jumping_vel = 3.5
 
-        self.lives = 1
+        self.lives = 4
 
         self.acc = 3
 
