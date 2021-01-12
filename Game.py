@@ -29,6 +29,7 @@ class Game:
         self.flower = Flower(win_width // 2 - 75, self.player.y + self.player.height - 55)
 
         self.ceiling = pygame.image.load("images/ceiling.png")
+        self.line = pygame.image.load("images/line.png")
 
         self.floor = [Platform(pygame.image.load("images/floor/red_floor_5.png"), win_width,
                                self.player.y + self.player.height),
@@ -282,6 +283,7 @@ class Game:
             self.lives_images[life].show_me()
 
         win.blit(self.ceiling, (0, -4))
+        win.blit(self.line, (win_width, 0))
 
         for floor in self.floor:
             floor.show_me()
