@@ -224,9 +224,9 @@ class Game:
         for falling_floor in self.falling_floor:
             if falling_floor_collision(self.player, falling_floor):
                 self.player.can_not_jump = True
-                if falling_floor.fall_count <= 70:
+                if falling_floor.fall_count <= 70 and not self.player.dying:
                     falling_floor.fall()
-                else:
+                elif falling_floor.fall_count > 70:
                     self.falling_floor.remove(falling_floor)
 
         for ladder in self.ladder:
