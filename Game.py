@@ -150,6 +150,7 @@ class Game:
             keys = pygame.key.get_pressed()
 
             self.gravity()
+            self.fall_damage()
 
             if not self.player.falling:
                 self.player_movement(keys)
@@ -161,10 +162,11 @@ class Game:
                 else:
                     self.player_jump(keys)
             else:
-                if keys[pygame.K_LEFT] and self.player.x > 0 and self.player.can_walk_left:
+                if keys[pygame.K_LEFT] and self.player.x > 0 and self.player.can_walk_left and self.player.facing_left:
                     self.player.move_left()
                     self.player.blit_standing()
-                elif keys[pygame.K_RIGHT] and self.player.x + self.player.width < win_width and self.player.can_walk_right:
+                elif keys[pygame.K_RIGHT] and self.player.x + self.player.width < win_width and \
+                        self.player.can_walk_right and self.player.facing_right:
                     self.player.move_right()
                     self.player.blit_standing()
 
@@ -324,12 +326,12 @@ class Game:
         self.flower.show_me()
 
     def player_movement(self, keys):
-        if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping:
+        if keys[pygame.K_LEFT] and not self.player.walking and not self.player.jumping and not self.player.falling:
             if self.player.can_walk_left and self.player.x > 0 and self.player.can_walk_left:
                 self.player.move_left()
             self.player.walking = True
             self.player.blit_moving_left()
-        if keys[pygame.K_RIGHT] and not self.player.walking and not self.player.jumping:
+        if keys[pygame.K_RIGHT] and not self.player.walking and not self.player.jumping and not self.player.falling:
             if self.player.can_walk_right and self.player.x + self.player.width < win_width:
                 self.player.move_right()
             self.player.walking = True
@@ -353,6 +355,16 @@ class Game:
             else:
                 self.player.jump()
             self.player.blit_standing()
+
+    def fall_damage(self):
+        if self.player.reducing_y or self.player.falling:
+            self.player.fall_damage_count += 1
+            if self.player.fall_damage_count > 50:
+                self.player.die_bc_fall_damage = True
+        else:
+            self.player.fall_damage_count = 0
+            if self.player.die_bc_fall_damage:
+                self.player.dying = True
 
     def gravity(self):
         if not self.player.jumping and not self.player.can_not_jump and not self.player.y > win_height - 160:

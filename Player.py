@@ -59,6 +59,9 @@ class Player:
         self.falling = False
         self.reducing_y = False
 
+        self.fall_damage_count = 0
+        self.die_bc_fall_damage = False
+
         self.move_left_bc_tha_wall = False
         self.move_right_bc_tha_wall = False
 
@@ -148,6 +151,7 @@ class Player:
             self.jump_count = 4.5
             self.done_dying = True
             self.lives -= 1
+            self.die_bc_fall_damage = False
 
             time.sleep(0.25)
 
