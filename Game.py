@@ -12,6 +12,7 @@ from Ladder import Ladder
 from ScoreNumbers import ScoreNumbers
 from FloatingText import FloatingText
 from Life import Life
+from Bomb import Bomb
 from settings import *
 
 
@@ -108,6 +109,8 @@ class Game:
                              Life(win_width + 20, 230),
                              Life(win_width + 20, 320),
                              Life(win_width + 20, 410)]
+
+        self.bomb = Bomb(win_width + 150, win_height - 125)
 
     def handle_events(self):
         for event in pygame.event.get():
@@ -220,6 +223,8 @@ class Game:
 
                               FallingFloor(0, self.floor[2].y + 5)]
 
+        self.bomb = Bomb(win_width + 150, win_height - 125)
+
     def collision(self):
         for falling_floor in self.falling_floor:
             if falling_floor_collision(self.player, falling_floor):
@@ -272,6 +277,9 @@ class Game:
             if door_collision(self.player, self.door):
                 self.player.going_into_door = True
 
+        if self.bomb.explode:
+            self.player.dying = True
+
     def blit_and_init(self):
         self.player.can_walk_left = True
         self.player.can_walk_right = True
@@ -322,6 +330,8 @@ class Game:
 
         if not self.player.going_into_door:
             self.door.show_me(self.balls)
+
+        self.bomb.show_me()
 
         self.flower.show_me()
 
