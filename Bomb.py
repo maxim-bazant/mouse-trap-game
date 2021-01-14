@@ -26,13 +26,14 @@ class Bomb(object):
         self.make_tail()
         self.bomb_count = 0
         self.explode = False
+        self.speed = 100
 
     def show_me(self):
         win.blit(self.image, (self.x, self.y))
         for dot in self.tail:
             dot.show_me()
 
-        if self.bomb_count % 150 == 0 and self.tail != []:
+        if self.bomb_count % self.speed == 0 and self.tail != []:
             self.tail.pop(-1)
         elif not self.tail:
             self.explode = True
