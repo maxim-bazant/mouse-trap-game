@@ -7,7 +7,7 @@ class Dot(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = pygame.image.load("images/dot.png")
+        self.image = pygame.image.load("images/bomb/dot.png")
 
     def show_me(self):
         win.blit(self.image, (self.x, self.y))
@@ -17,7 +17,7 @@ class Bomb(object):
     def __init__(self, x, y):
         self.x = x
         self.y = y
-        self.image = pygame.image.load("images/bomb.png").convert_alpha()
+        self.image = pygame.image.load("images/bomb/bomb.png").convert_alpha()
         self.width = self.image.get_rect().width
         self.height = self.image.get_rect().height
         self.dot_x = self.x + self.width - 54  # 44
