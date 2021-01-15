@@ -226,6 +226,7 @@ class Game:
                               FallingFloor(0, self.floor[2].y + 5)]
 
         self.bomb = Bomb(win_width + 150, win_height - 125)
+        self.play_jump_sound = True
 
     def collision(self):
         for falling_floor in self.falling_floor:
@@ -349,7 +350,7 @@ class Game:
                 self.player.move_right()
             self.player.walking = True
             self.player.blit_moving_right()
-        elif not self.player.jumping:
+        else:
             self.player.blit_standing()
 
     def player_jump(self, keys):
