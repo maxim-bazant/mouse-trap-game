@@ -27,6 +27,12 @@ class Bomb(object):
         self.bomb_count = 0
         self.explode = False
         self.speed = 100
+        self.sparkle_count = 0
+        self.image_changer = 15
+
+        self.sparkles = []
+        for number in ["01", "02", "03", "04"]:
+            self.sparkles.append(pygame.image.load(f"images/bomb/sparkles_{number}.png").convert_alpha())
 
     def show_me(self):
         win.blit(self.image, (self.x, self.y))
@@ -39,6 +45,14 @@ class Bomb(object):
             self.explode = True
 
         self.bomb_count += 1
+
+        if self.tail:
+            if self.sparkle_count + 1 < len(self.sparkles) * self.image_changer:
+                self.sparkle_count += 1
+            else:
+                self.sparkle_count = 0
+
+            win.blit(self.sparkles[self.sparkle_count // self.image_changer], (self.tail[-1].x - 25, self.tail[-1].y - 25))
 
     def make_tail(self):
         for i in range((win_height - 300) // 4):
