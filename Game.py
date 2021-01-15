@@ -277,7 +277,7 @@ class Game:
             if door_collision(self.player, self.door):
                 self.player.going_into_door = True
 
-        if self.bomb.explode:
+        if self.bomb.explode_:
             self.player.dying = True
 
     def blit_and_init(self):

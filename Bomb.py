@@ -25,24 +25,33 @@ class Bomb(object):
         self.tail = []
         self.make_tail()
         self.bomb_count = 0
-        self.explode = False
-        self.speed = 100
+        self.explode_ = False
+        self.exploded_already = False
+        self.speed = 2
         self.sparkle_count = 0
+        self.explode_count = 0
         self.image_changer = 15
+        self.explosion_image_changer = 20
 
         self.sparkles = []
         for number in ["01", "02", "03", "04"]:
             self.sparkles.append(pygame.image.load(f"images/bomb/sparkles_{number}.png").convert_alpha())
 
+        self.explosion = []
+        for number in ["01", "02", "03", "04", "05"]:
+            self.explosion.append(pygame.image.load(f"images/bomb/explosion_{number}.png").convert_alpha())
+
     def show_me(self):
-        win.blit(self.image, (self.x, self.y))
+        if not self.explode_:
+            win.blit(self.image, (self.x, self.y))
         for dot in self.tail:
             dot.show_me()
 
         if self.bomb_count % self.speed == 0 and self.tail != []:
             self.tail.pop(-1)
         elif not self.tail:
-            self.explode = True
+            self.explode_ = True
+            self.explode()
 
         self.bomb_count += 1
 
@@ -73,3 +82,16 @@ class Bomb(object):
                 self.dot_x += 0
 
             self.dot_y -= 4
+
+    def explode(self):
+        if self.explode_:
+            if self.explode_count + 1 < len(self.explosion) * self.explosion_image_changer:
+                self.explode_count += 1
+            else:
+                self.explode_count = 0
+                self.exploded_already = True
+
+            if self.exploded_already:
+                win.blit(self.explosion[-1], (self.x - 25, self.y - 25))
+            else:
+                win.blit(self.explosion[self.explode_count // self.explosion_image_changer], (self.x - 25, self.y - 25))

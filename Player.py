@@ -20,6 +20,7 @@ class Player:
             self.dying_images.append(pygame.image.load(f"images/mouse/dying/{number}.png").convert_alpha())
 
         self.image_changer = 7
+        self.dying_image_changer = 20
 
         self.mask = pygame.mask.from_surface(self.left_images[0])
 
@@ -128,16 +129,16 @@ class Player:
 
     def blit_dying(self):
         self.done_dying = False
-        self.image_changer = 9
-        if self.dying_count + 1 < self.image_changer * len(self.dying_images):
+        self.dying_image_changer = 9
+        if self.dying_count + 1 < self.dying_image_changer * len(self.dying_images):
             self.dying_count += 1
         else:
             self.dying_count = 0
 
-        self.mask = pygame.mask.from_surface(self.dying_images[self.dying_count // self.image_changer])
-        win.blit(self.dying_images[self.dying_count // self.image_changer], (self.x, self.y))
+        self.mask = pygame.mask.from_surface(self.dying_images[self.dying_count // self.dying_image_changer])
+        win.blit(self.dying_images[self.dying_count // self.dying_image_changer], (self.x, self.y))
 
-        if self.dying_count // self.image_changer == 17:
+        if self.dying_count // self.dying_image_changer == 17:
             self.move_left_bc_tha_wall = False
             self.move_right_bc_tha_wall = False
             self.facing_right = False
@@ -146,7 +147,7 @@ class Player:
             self.dying_count = 0
             self.x = win_width - self.width - 20
             self.y = 150
-            self.image_changer = 7
+            self.dying_image_changer = 10
             self.jumping = False
             self.jump_count = 4.5
             self.done_dying = True
