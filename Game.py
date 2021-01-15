@@ -25,6 +25,7 @@ class Game:
         self.win_width = win_width
         self.win_height = win_height
         self.win = win
+        self.play_jump_sound = True
         self.player = Player()
 
         self.flower = Flower(win_width // 2 - 75, self.player.y + self.player.height - 55)
@@ -158,6 +159,7 @@ class Game:
             if not self.player.falling:
                 self.player_movement(keys)
                 if (self.player.reducing_y and self.player.can_not_jump) or self.player.no_jump_up:
+                    self.play_jump_sound = True
                     self.player.reducing_y = False
                     self.player.jump_count = 4.5
                     self.player.jumping = False
@@ -261,6 +263,7 @@ class Game:
 
         for ball in self.balls:
             if ball_collision(self.player, ball):
+                pickup_sound.play()
                 self.score += 40
                 self.balls.remove(ball)
 
@@ -346,25 +349,28 @@ class Game:
                 self.player.move_right()
             self.player.walking = True
             self.player.blit_moving_right()
-        else:
+        elif not self.player.jumping:
             self.player.blit_standing()
 
     def player_jump(self, keys):
         if keys[pygame.K_SPACE] or self.player.jumping:
+            if self.play_jump_sound:
+                jump_sound.play()
+                self.play_jump_sound = False
+
             if self.player.walking:
                 if self.player.facing_left:
-                    self.player.jump()
+                    self.player.jump(self.play_jump_sound)
                     if self.player.jumping and self.player.x > 0 and self.player.can_walk_left:
                         self.player.x -= self.player.jumping_vel
 
                 elif self.player.facing_right:
-                    self.player.jump()
+                    self.player.jump(self.play_jump_sound)
                     if self.player.jumping and self.player.x + self.player.width < win_width\
                             and self.player.can_walk_right:
                         self.player.x += self.player.jumping_vel
             else:
-                self.player.jump()
-            self.player.blit_standing()
+                self.player.jump(self.play_jump_sound)
 
     def fall_damage(self):
         if self.player.reducing_y or self.player.falling:

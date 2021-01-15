@@ -6,6 +6,7 @@ from settings import *
 
 class Player:
     def __init__(self):
+        self.play_jump_sound = False
         self.right_images = []
         for number in ["01", "02", "03", "04", "05", "06", "07", "08"]:
             self.right_images.append(pygame.image.load(f"images/mouse/right/{number}.png").convert_alpha())
@@ -76,10 +77,15 @@ class Player:
         self.facing_right = False
         self.x -= self.vel
 
-    def jump(self):
+    def jump(self, play_jump_sound):
         self.jumping = True
+        self.play_jump_sound = play_jump_sound
 
         if self.jumping:
+            if self.play_jump_sound:
+                self.play_jump_sound = False
+                jump_sound.play()
+
             if self.jump_count >= -4.5:
                 neg = 1
                 if self.jump_count < 0:

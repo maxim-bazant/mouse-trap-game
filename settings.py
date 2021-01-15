@@ -13,5 +13,8 @@ pygame.font.init()
 pygame.init()
 
 bg_music = pygame.mixer.music.load("sound/music.mp3")
-pygame.mixer.music.set_volume(0.2)
+pygame.mixer.music.set_volume(0.5)
 pygame.mixer.music.play(-1)  # -1 means that it will play the music infinitely
+
+jump_sound = pygame.mixer.Sound("sound/jump.wav")
+pickup_sound = pygame.mixer.Sound("sound/pickup_coin_sound.wav")
