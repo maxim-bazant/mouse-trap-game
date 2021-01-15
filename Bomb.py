@@ -27,7 +27,7 @@ class Bomb(object):
         self.bomb_count = 0
         self.explode_ = False
         self.exploded_already = False
-        self.speed = 2
+        self.speed = 100
         self.sparkle_count = 0
         self.explode_count = 0
         self.image_changer = 15
