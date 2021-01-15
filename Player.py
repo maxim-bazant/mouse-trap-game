@@ -23,6 +23,8 @@ class Player:
         self.image_changer = 7
         self.dying_image_changer = 20
 
+        self.play_death_sound = True
+
         self.mask = pygame.mask.from_surface(self.left_images[0])
 
         self.width = self.right_images[0].get_rect().width
@@ -134,6 +136,10 @@ class Player:
                 self.mask = pygame.mask.from_surface(self.right_images[0])
 
     def blit_dying(self):
+        if self.play_death_sound:
+            dying_sound.play()
+            self.play_death_sound = False
+
         self.done_dying = False
         self.dying_image_changer = 9
         if self.dying_count + 1 < self.dying_image_changer * len(self.dying_images):
@@ -159,6 +165,7 @@ class Player:
             self.done_dying = True
             self.lives -= 1
             self.die_bc_fall_damage = False
+            self.play_death_sound = True
 
             time.sleep(0.25)
 
