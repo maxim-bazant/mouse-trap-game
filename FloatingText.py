@@ -19,7 +19,7 @@ class FloatingText(object):
         self.show_count = 0
         self.image_changer = image_changer
 
-    def show_and_move(self):
+    def show_and_move(self, player):
         if self.show_count + 1 < len(self.images) * self.image_changer:
             self.show_count += 1
         else:
@@ -28,16 +28,17 @@ class FloatingText(object):
         win.blit(self.images[self.show_count // self.image_changer], (self.x, self.y))
 
         # move
-        if self.move:
-            if self.go_down:
-                if self.y < win_height:
-                    self.y += self.vel
-                else:
-                    self.y = -85
+        if not player.dying:
+            if self.move:
+                if self.go_down:
+                    if self.y < win_height:
+                        self.y += self.vel
+                    else:
+                        self.y = -85
 
-            elif not self.go_down:
-                if self.y > -85:
-                    self.y -= self.vel
-                else:
-                    self.y = win_height
+                elif not self.go_down:
+                    if self.y > -85:
+                        self.y -= self.vel
+                    else:
+                        self.y = win_height
 

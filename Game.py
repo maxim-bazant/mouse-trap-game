@@ -288,7 +288,7 @@ class Game:
         self.handle_events()
 
         for mouse_trap_text in self.mouse_trap_text:
-            mouse_trap_text.show_and_move()
+            mouse_trap_text.show_and_move(self.player)
 
         for life in range(self.player.lives):
             self.lives_images[life].show_me()

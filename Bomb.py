@@ -69,7 +69,7 @@ class Bomb(object):
 
             number = random.randint(0, 3)
             if number == 0:
-                if self.dot_x > self.x + self.width - 120:
+                if self.dot_x > self.x + self.width - 110:
                     self.dot_x -= 4
                 else:
                     self.dot_x += 4
