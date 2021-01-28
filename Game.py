@@ -372,9 +372,6 @@ class Game:
                         self.player.x += self.player.jumping_vel
             else:
                 self.player.jump(self.play_jump_sound)
-                self.player.blit_standing()
-        else:
-            self.player.blit_standing()
 
     def fall_damage(self):
         if self.player.reducing_y or self.player.falling:
